@@ -2,7 +2,7 @@
 % Please edit documentation in R/formater.R
 \name{flip_windows_path}
 \alias{flip_windows_path}
-\title{Flip windows path separator in clipboard then paste}
+\title{Flip windows path}
 \usage{
 flip_windows_path()
 }

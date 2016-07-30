@@ -1,9 +1,9 @@
-#' Remove hard line breaks in clipboard then paste
+#' Unwrap text
 #'
-#' \code{unwrap} Remove unneeded hard line breaks of text in clipboard, like
-#' copied from pdf, then paste into current cursor position.
+#' \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
+#' paste into current cursor position.
 #'
-#' @param extra_blank_line Whether to insert extra blank line between paragraphs
+#' @param extra_blank_line Whether to insert extra blank line between paragraphs.
 #'
 #' @export
 #'
@@ -21,7 +21,19 @@ unwrap <- function(extra_blank_line = FALSE) {
     rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
 }
 
-#' Flip windows path separator in clipboard then paste
+#' Unwrap with blank line
+#'
+#' Remove unneeded hard line breaks of text in clipboard, insert extra blank
+#' line between paragraphs, then paste into current cursor position. Need this
+#' helper because RStudio Addin doesn't support function with parameters.
+#'
+#' @export
+#'
+unwrap_extra_blank <- function(){
+    unwrap(TRUE)
+}
+
+#' Flip windows path
 #'
 #' \code{flip_windows_path} convert "\" in clipboard to "/", then paste into
 #' current cursor position

@@ -2,15 +2,15 @@
 % Please edit documentation in R/formater.R
 \name{unwrap}
 \alias{unwrap}
-\title{Remove hard line breaks in clipboard then paste}
+\title{Unwrap text}
 \usage{
 unwrap(extra_blank_line = FALSE)
 }
 \arguments{
-\item{extra_blank_line}{Whether to insert extra blank line between paragraphs}
+\item{extra_blank_line}{Whether to insert extra blank line between paragraphs.}
 }
 \description{
-\code{unwrap} Remove unneeded hard line breaks of text in clipboard, like
-copied from pdf, then paste into current cursor position.
+\code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
+paste into current cursor position.
 }
 

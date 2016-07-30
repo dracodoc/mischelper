@@ -1,0 +1,14 @@
+Name: Unwrap text
+Description: Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
+Binding: unwrap
+Interactive: false
+
+Name: Unwrap with blank line
+Description: Remove hard line breaks in clipboard, add extra blank line between paragraphs then paste into the cursor position.
+Binding: unwrap_extra_blank
+Interactive: false
+
+Name: Flip windows path
+Description: convert "\" in clipboard to "/", then paste into current cursor position
+Binding: flip_windows_path
+Interactive: false

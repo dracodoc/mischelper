@@ -4,10 +4,9 @@ Title: Remove Hard Line Breaks in Clipboard Then Paste
 Version: 0.1.0
 Author: Xianghui Dong
 Maintainer: Xianghui Dong <dracodoc@gmail.com>
-Description: Remove unneeded hard line breaks of text in clipboard, like text
-    copied from pdf, then paste into current cursor position. Also included a
-    function to flip windows path separator in clipboard, so that path copied in
-    windows can be used in R.
+Description: Remove unneeded hard line breaks of text in clipboard, then paste
+    into current cursor position. Also included a function to flip windows path
+    separator in clipboard.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
