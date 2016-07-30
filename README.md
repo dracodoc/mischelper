@@ -1,3 +1,5 @@
+## formatpaste
+
 This is a very simple RStudio Addin with 3 functions:
 * Unwrap text
 
