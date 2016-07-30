@@ -8,8 +8,10 @@ Description: Remove unneeded hard line breaks of text in clipboard, like text
     copied from pdf, then paste into current cursor position. Also included a
     function to flip windows path separator in clipboard, so that path copied in
     windows can be used in R.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: stringr,
+Imports:
+    stringr,
     rstudioapi
+RoxygenNote: 5.0.1

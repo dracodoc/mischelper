@@ -5,13 +5,12 @@
 #'
 #' @param extra_blank_line Whether to insert extra blank line between paragraphs
 #'
-#' @return
 #' @export
 #'
 unwrap <- function(extra_blank_line = FALSE) {
-    clipboard <- stringr::str_trim(readClipboard(), side = "right")
+    clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
     # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
-    non_terminating_match<- stringr::str_c("[^\\.!?:", "”", "]") # terminating punctuation in end of line.
+    non_terminating_match<- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
     # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
     to_remove_wrap <- stringr::str_detect(clipboard, stringr::str_c(".*", non_terminating_match, "$"))
     # use space for soft wrap lines, new line for other wrap
@@ -20,4 +19,17 @@ unwrap <- function(extra_blank_line = FALSE) {
     text_formated <- stringr::str_c(clipboard, line_connector, collapse = "")
     context <- rstudioapi::getActiveDocumentContext()
     rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+}
+
+#' Flip windows path separator in clipboard then paste
+#'
+#' \code{flip_windows_path} convert "\" in clipboard to "/", then paste into
+#' current cursor position
+#'
+#' @export
+#'
+flip_windows_path <- function(){
+    p2 <- stringr::str_replace_all(utils::readClipboard(), "\\\\", "/")
+    context <- rstudioapi::getActiveDocumentContext()
+    rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
 }
