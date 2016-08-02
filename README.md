@@ -14,7 +14,7 @@ To install:
         install.packages("devtools")
         devtools::install_github("dracodoc/mischelper")
         
-The packages `stringr`, `stringi`, `magrittr`, `microbenchmark` will be installed if not already available. `microbenchmark` is only required for `benchmark` function, but I chose to install it automatically because it is a simple and small package with little burden to install.
+The packages `stringr`, `stringi`, `magrittr`, `microbenchmark`, `profvis` will be installed if not already available. `microbenchmark` is only required for `benchmark` function, and `profvis` is only for `profvis` but I chose to install them automatically because they are small packages without much dependencies. 
 
 Functions can be accessed from the drop down list in Addin toolbar button or with keyboard shortcuts. All functions are prefixed with `Misc`.
 
