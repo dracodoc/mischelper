@@ -10,7 +10,7 @@
 unwrap <- function(extra_blank_line = FALSE) {
     clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
     # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
-    non_terminating_match<- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
+    non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
     # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
     to_remove_wrap <- stringr::str_detect(clipboard, stringr::str_c(".*", non_terminating_match, "$"))
     # use space for soft wrap lines, new line for other wrap
@@ -44,4 +44,24 @@ flip_windows_path <- function(){
     p2 <- stringr::str_replace_all(utils::readClipboard(), "\\\\", "/")
     context <- rstudioapi::getActiveDocumentContext()
     rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
+}
+
+#' microbenchmark selected
+#'
+#' microbenchmark selected code 10 runs in console without changing the source
+#' code. microbenchmark parameters can be changed by recalling history in
+#' console then edit the last line.
+#'
+#' @export
+#'
+benchmark <- function(){
+    context <- rstudioapi::getActiveDocumentContext()
+    selection_start <- context$selection[[1]]$range$start
+    selection_end <- context$selection[[1]]$range$end
+    if (any(selection_start != selection_end)) { # text selected
+        selected <- context$selection[[1]]$text
+        formated <- stringr::str_c("microbenchmark::microbenchmark({\n",
+                                   selected, "}, times = 10)")
+        rstudioapi::sendToConsole(formated, execute = TRUE)
+    }
 }

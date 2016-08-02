@@ -1,12 +1,12 @@
-Package: formatpaste
+Package: mischelper
 Type: Package
-Title: Remove Hard Line Breaks in Clipboard Then Paste
-Version: 0.1.0
+Title: Collections Of Miscellaneous Helper Functions To Save Some Time
+Version: 0.2.0
 Author: Xianghui Dong
 Maintainer: Xianghui Dong <dracodoc@gmail.com>
-Description: Remove unneeded hard line breaks of text in clipboard, then paste
-    into current cursor position. Also included a function to flip windows path
-    separator in clipboard.
+Description: Remove unneeded hard line breaks of text in clipboard, then paste.
+    flip windows path separator in clipboard.
+    microbenchmark selected code.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -14,5 +14,6 @@ Imports:
     stringr,
     rstudioapi,
     stringi,
-    magrittr
+    magrittr,
+    microbenchmark
 RoxygenNote: 5.0.1
