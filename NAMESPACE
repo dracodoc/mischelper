@@ -2,5 +2,6 @@
 
 export(benchmark)
 export(flip_windows_path)
+export(profv)
 export(unwrap)
 export(unwrap_extra_blank)

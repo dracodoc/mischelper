@@ -15,5 +15,6 @@ Imports:
     rstudioapi,
     stringi,
     magrittr,
-    microbenchmark
+    microbenchmark,
+    profvis
 RoxygenNote: 5.0.1

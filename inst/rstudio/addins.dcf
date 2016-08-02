@@ -17,3 +17,8 @@ Name: Misc - microbenchmark
 Description: microbenchmark selected code with 10 runs in console
 Binding: benchmark
 Interactive: false
+
+Name: Misc - profvis
+Description: profvis selected code in console
+Binding: profv
+Interactive: false
