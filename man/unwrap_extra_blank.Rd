@@ -8,7 +8,10 @@ unwrap_extra_blank()
 }
 \description{
 Remove unneeded hard line breaks of text in clipboard, insert extra blank
-line between paragraphs, then paste into current cursor position. Need this
-helper because RStudio Addin doesn't support function with parameters.
+line between paragraphs, then paste into current cursor position.
+}
+\details{
+Need this helper because RStudio Addin doesn't support function with
+parameters.
 }
 

@@ -8,7 +8,10 @@ benchmark()
 }
 \description{
 microbenchmark selected code for 10 runs in console without changing the
-source code. \code{microbenchmark()} parameters can be changed by recalling
-history in console then editing the last line.
+source code.
+}
+\details{
+\code{microbenchmark()} parameters can be changed by recalling history in
+console then editing the last line.
 }
 

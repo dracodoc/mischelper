@@ -24,8 +24,10 @@ unwrap <- function(extra_blank_line = FALSE) {
 #' Unwrap with blank line
 #'
 #' Remove unneeded hard line breaks of text in clipboard, insert extra blank
-#' line between paragraphs, then paste into current cursor position. Need this
-#' helper because RStudio Addin doesn't support function with parameters.
+#' line between paragraphs, then paste into current cursor position.
+#'
+#' Need this helper because RStudio Addin doesn't support function with
+#' parameters.
 #'
 #' @export
 #'
@@ -49,8 +51,10 @@ flip_windows_path <- function(){
 #' microbenchmark selected
 #'
 #' microbenchmark selected code for 10 runs in console without changing the
-#' source code. \code{microbenchmark()} parameters can be changed by recalling
-#' history in console then editing the last line.
+#' source code.
+#'
+#' \code{microbenchmark()} parameters can be changed by recalling history in
+#' console then editing the last line.
 #'
 #' @export
 #'
