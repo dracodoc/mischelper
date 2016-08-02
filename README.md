@@ -18,6 +18,11 @@ The packages `stringr`, `stringi`, `magrittr`, `microbenchmark` will be installe
 
 Functions can be accessed from the drop down list in Addin toolbar button or with keyboard shortcuts. All functions are prefixed with `Misc`.
 
+If you feel you don't need all the functions and they take too much space in the Addin drop down list, you can prevent some to be registered by RStudio. 
+- find the package installation folder with `devtools::inst("mischelper")`.
+- edit `rstudio\addins.dcf`, remove the sections you don't need.
+- restart R session.
+
 ### benchmark selected code
 * Misc - microbenchmark
 
@@ -32,7 +37,7 @@ Currently the source editor window must be in focus before calling function, i.e
 you selected some code in source editor but moved focus to console before calling function, the addin will not work. There is a `getSourceEditorContext()` function in `rstudioapi` to solve this, but it is only available after RStudio version `0.99.1111`, which is only available as preview version. I plan to move to this function in future.
 
 ### Helper with clipboard
-Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position.
+Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position. This works in both source editor and console.
 
 * Misc - Unwrap text
 
