@@ -24,6 +24,8 @@ If you feel you don't need all the functions and they take too much space in the
 - restart R session.
 
 ### benchmark selected code
+![benchmark](/inst/demo/benchmark.gif)
+
 * Misc - microbenchmark
 
   Select code to be benchmarked, use keyboard shortcut or toolbar menu. The code will be benchmarked for 10 runs in console. `microbenchmark()` parameters can be changed by recalling history in console then editing the last line.
@@ -39,6 +41,7 @@ you selected some code in source editor but moved focus to console before callin
 ### Helper with clipboard
 Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position. This works in both source editor and console.
 
+![unwrap](/inst/demo/unwrap.gif)
 * Misc - Unwrap text
 
   Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
@@ -46,7 +49,7 @@ Copy text into clipboard, put cursor to desired position. Each function will ins
 
   Remove hard line breaks, add add extra blank line between paragraphs, then paste into the cursor position.
 * Misc - Flip windows path
-
+![flip](/inst/demo/flip.gif)
   Convert "\" in clipboard to "/", then paste into current cursor position. Thus windows path can be used in R.
 
 
