@@ -49,9 +49,10 @@ Copy text into clipboard, put cursor to desired position. Each function will ins
 
   Remove hard line breaks, add add extra blank line between paragraphs, then paste into the cursor position.
 * Misc - Flip windows path
-![flip](/inst/demo/flip.gif)
+
   Convert "\" in clipboard to "/", then paste into current cursor position. Thus windows path can be used in R.
 
+![flip](/inst/demo/flip.gif)
 
 ## Keyboard shortcuts
 You can assign keyboard shortcut to functions:
