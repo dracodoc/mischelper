@@ -7,7 +7,7 @@ These functions are very simple in concept but may save you some time.
 
 ## Installation
 To install:
-* Install RStudio newest release version.
+* Install RStudio newest release or preview version. (Version 0.99.903 has a bug to run microbenchmark 3 times. Newer preview version don't have this bug.)
 * Run following lines in RStudio console:
 
 
