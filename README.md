@@ -26,7 +26,13 @@ If you feel you don't need all the functions and they take too much space in the
 - edit `rstudio\addins.dcf`, remove the sections you don't need.
 - restart R session.
 
-### benchmark selected code
+### Keyboard shortcuts
+You can assign keyboard shortcut to functions:
+* Select `Browse Addins` from the Addin toolbar button.
+* Click `Keyboard Shortcuts` in left bottom.
+* Click the Shortcut column for each row to assign keyboard shortcut.
+
+## benchmark selected code
 ![benchmark](/inst/demo/benchmark.gif)
 
 * Misc - microbenchmark
@@ -41,10 +47,10 @@ If you feel you don't need all the functions and they take too much space in the
 Currently the source editor window must be in focus before calling function, i.e. if 
 you selected some code in source editor but moved focus to console before calling function, the addin will not work. There is a `getSourceEditorContext()` function in `rstudioapi` to solve this, but it is only available after RStudio version `0.99.1111`, which is only available as preview version. I plan to move to this function in future.
 
-### Helper with clipboard
+## Helper with clipboard
 Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position. This works in both source editor and console.
 
-* Misc - Format console input and output
+### Misc - Format console input and output
 
 It's very common to find R code examples copied directly from console, which have format like this:
 
@@ -84,22 +90,17 @@ To run these examples as script, lots of manual edits are needed. Now you can co
 The [formatR](http://yihui.name/formatR/) package have a related feature, though it will only evaluate valid script and put results in comments.
 
 
-* Misc - Unwrap text
+### Misc - Unwrap text
 
 ![unwrap](/inst/demo/unwrap.gif)
 
   Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
-* Misc - Unwrap with blank
+### Misc - Unwrap with blank
 
   Remove hard line breaks, add add extra blank line between paragraphs, then paste into the cursor position.
-* Misc - Flip windows path
+### Misc - Flip windows path
 
   Convert "\" in clipboard to "/", then paste into current cursor position. Thus windows path can be used in R.
 
 ![flip](/inst/demo/flip.gif)
 
-## Keyboard shortcuts
-You can assign keyboard shortcut to functions:
-* Select `Browse Addins` from the Addin toolbar button.
-* Click `Keyboard Shortcuts` in left bottom.
-* Click the Shortcut column for each row to assign keyboard shortcut.
