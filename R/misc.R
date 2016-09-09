@@ -8,17 +8,17 @@
 #' @export
 #'
 unwrap <- function(extra_blank_line = FALSE) {
-    clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
-    # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
-    non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
-    # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
-    to_remove_wrap <- stringr::str_detect(clipboard, stringr::str_c(".*", non_terminating_match, "$"))
-    # use space for soft wrap lines, new line for other wrap
-    line_connector <- rep(ifelse(extra_blank_line, "\n\n", "\n"), length(clipboard))
-    line_connector[to_remove_wrap] <- " "
-    text_formated <- stringr::str_c(clipboard, line_connector, collapse = "")
-    context <- rstudioapi::getActiveDocumentContext()
-    rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+  clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
+  # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
+  non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
+  # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
+  to_remove_wrap <- stringr::str_detect(clipboard, stringr::str_c(".*", non_terminating_match, "$"))
+  # use space for soft wrap lines, new line for other wrap
+  line_connector <- rep(ifelse(extra_blank_line, "\n\n", "\n"), length(clipboard))
+  line_connector[to_remove_wrap] <- " "
+  text_formated <- stringr::str_c(clipboard, line_connector, collapse = "")
+  context <- rstudioapi::getActiveDocumentContext()
+  rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
 }
 
 #' Unwrap with blank line
@@ -32,7 +32,7 @@ unwrap <- function(extra_blank_line = FALSE) {
 #' @export
 #'
 unwrap_extra_blank <- function(){
-    unwrap(TRUE)
+  unwrap(TRUE)
 }
 
 #' Flip windows path
@@ -43,9 +43,9 @@ unwrap_extra_blank <- function(){
 #' @export
 #'
 flip_windows_path <- function(){
-    p2 <- stringr::str_replace_all(utils::readClipboard(), "\\\\", "/")
-    context <- rstudioapi::getActiveDocumentContext()
-    rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
+  p2 <- stringr::str_replace_all(utils::readClipboard(), "\\\\", "/")
+  context <- rstudioapi::getActiveDocumentContext()
+  rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
 }
 
 #' microbenchmark selected
@@ -59,15 +59,15 @@ flip_windows_path <- function(){
 #' @export
 #'
 benchmark <- function(){
-    context <- rstudioapi::getActiveDocumentContext()
-    selection_start <- context$selection[[1]]$range$start
-    selection_end <- context$selection[[1]]$range$end
-    if (any(selection_start != selection_end)) { # text selected
-        selected <- context$selection[[1]]$text
-        formated <- stringr::str_c("microbenchmark::microbenchmark({\n",
-                                   selected, "}, times = 10)")
-        rstudioapi::sendToConsole(formated, execute = TRUE)
-    }
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    formated <- stringr::str_c("microbenchmark::microbenchmark({\n",
+      selected, "}, times = 10)")
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
 }
 
 #' profvis selected
@@ -77,17 +77,43 @@ benchmark <- function(){
 #' @export
 #'
 profv <- function(){
-    # if (!requireNamespace("profvis", quietly = TRUE)) {
-    #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
-    #          call. = FALSE)
-    # }
-    context <- rstudioapi::getActiveDocumentContext()
-    selection_start <- context$selection[[1]]$range$start
-    selection_end <- context$selection[[1]]$range$end
-    if (any(selection_start != selection_end)) { # text selected
-        selected <- context$selection[[1]]$text
-        formated <- stringr::str_c("profvis::profvis({\n",
-                                   selected, "})")
-        rstudioapi::sendToConsole(formated, execute = TRUE)
-    }
+  # if (!requireNamespace("profvis", quietly = TRUE)) {
+  #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
+  #          call. = FALSE)
+  # }
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    formated <- stringr::str_c("profvis::profvis({\n",
+      selected, "})")
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
+}
+
+
+#' Format console
+#'
+#' read console input and output from clipboard, format as script
+#'
+#' Formated script is written back to clipboard, and inserted to current cursor
+#' location
+#'
+#' @export
+#'
+format_console <- function(){
+  input_lines <- utils::readClipboard()
+  empty_index <- stringr::str_detect(input_lines, "^\\s*$")
+  commands_index <- stringr::str_detect(input_lines, "^\\+|^>")
+  input_lines[!(commands_index | empty_index)] <-
+    stringr::str_c("# ", input_lines[!(commands_index | empty_index)], sep = "")
+  input_lines[commands_index] <-
+    stringr::str_replace_all(input_lines[commands_index], "^\\+", " ")
+  input_lines[commands_index] <-
+    stringr::str_replace_all(input_lines[commands_index], "^>\\s?", "")
+  utils::writeClipboard(input_lines)
+  output <- stringr::str_c(input_lines, "\n", collapse = "")
+  context <- rstudioapi::getActiveDocumentContext()
+  rstudioapi::insertText(context$selection[[1]]$range, output, id = context$id)
 }

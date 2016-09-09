@@ -23,6 +23,42 @@ If you feel you don't need all the functions and they take too much space in the
 - edit `rstudio\addins.dcf`, remove the sections you don't need.
 - restart R session.
 
+### format console input and output
+It's very common to find R code examples copied directly from console, which have format like this:
+
+    > x <- 3
+    > switch(x, 2+2, mean(1:10), rnorm(5))
+    [1]  2.2903605  2.3271663 -0.7060073  1.3622045 -0.2892720
+
+
+    > centre <- function(x, type) {
+    + switch(type,
+    +        mean = mean(x),
+    +        median = median(x),
+    +        trimmed = mean(x, trim = .1))
+    + }
+    > x <- rcauchy(10)
+    > centre(x, "mean")
+    [1] 0.8760325
+
+
+To run these examples as script, lots of manual edits are needed. Now you can copy them either from some documents or your console, click addin menu `Misc - Format console`, the formated script will be inserted to current cursor position, and written back to clipboard so you can paste to other applications:
+
+    x <- 3
+    switch(x, 2+2, mean(1:10), rnorm(5))
+    # [1]  2.2903605  2.3271663 -0.7060073  1.3622045 -0.2892720
+
+
+    centre <- function(x, type) {
+      switch(type,
+             mean = mean(x),
+             median = median(x),
+             trimmed = mean(x, trim = .1))
+      }
+    x <- rcauchy(10)
+    centre(x, "mean")
+    # [1] 0.8760325
+
 ### benchmark selected code
 ![benchmark](/inst/demo/benchmark.gif)
 

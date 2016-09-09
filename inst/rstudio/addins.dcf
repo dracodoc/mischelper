@@ -22,3 +22,8 @@ Name: Misc - profvis
 Description: profvis selected code in console
 Binding: profv
 Interactive: false
+
+Name: Misc - Format console
+Description: Format console input and output to script
+Binding: format_console
+Interactive: false
