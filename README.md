@@ -83,8 +83,10 @@ To run these examples as script, lots of manual edits are needed. Now you can co
 
 The [formatR](http://yihui.name/formatR/) package have a related feature, though it will only evaluate valid script and put results in comments.
 
-![unwrap](/inst/demo/unwrap.gif)
+
 * Misc - Unwrap text
+
+![unwrap](/inst/demo/unwrap.gif)
 
   Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
 * Misc - Unwrap with blank
