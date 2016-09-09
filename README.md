@@ -5,6 +5,9 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 
 These functions are very simple in concept but may save you some time.
 
+## Updates
+2016.09.09  Added feature to format console input and output
+
 ## Installation
 To install:
 * Install RStudio newest release or preview version. (Version 0.99.903 has a bug to run microbenchmark 3 times. Newer preview version don't have this bug.)
@@ -23,7 +26,26 @@ If you feel you don't need all the functions and they take too much space in the
 - edit `rstudio\addins.dcf`, remove the sections you don't need.
 - restart R session.
 
-### format console input and output
+### benchmark selected code
+![benchmark](/inst/demo/benchmark.gif)
+
+* Misc - microbenchmark
+
+  Select code to be benchmarked, use keyboard shortcut or toolbar menu. The code will be benchmarked for 10 runs in console. `microbenchmark()` parameters can be changed by recalling history in console then editing the last line.
+  Since the source code is not changed, you can continue to edit the code, select different code sections to benchmark, continue working on code without needing to remove bechmark code when you are done with benchmark. 
+
+* Misc - profvis
+
+  Similar to microbenchmark, using [`profvis`](https://github.com/rstudio/profvis) to visualize profiling result. 
+
+Currently the source editor window must be in focus before calling function, i.e. if 
+you selected some code in source editor but moved focus to console before calling function, the addin will not work. There is a `getSourceEditorContext()` function in `rstudioapi` to solve this, but it is only available after RStudio version `0.99.1111`, which is only available as preview version. I plan to move to this function in future.
+
+### Helper with clipboard
+Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position. This works in both source editor and console.
+
+* Misc - Format console input and output
+
 It's very common to find R code examples copied directly from console, which have format like this:
 
     > x <- 3
@@ -59,23 +81,7 @@ To run these examples as script, lots of manual edits are needed. Now you can co
     centre(x, "mean")
     # [1] 0.8760325
 
-### benchmark selected code
-![benchmark](/inst/demo/benchmark.gif)
-
-* Misc - microbenchmark
-
-  Select code to be benchmarked, use keyboard shortcut or toolbar menu. The code will be benchmarked for 10 runs in console. `microbenchmark()` parameters can be changed by recalling history in console then editing the last line.
-  Since the source code is not changed, you can continue to edit the code, select different code sections to benchmark, continue working on code without needing to remove bechmark code when you are done with benchmark. 
-
-* Misc - profvis
-
-  Similar to microbenchmark, using [`profvis`](https://github.com/rstudio/profvis) to visualize profiling result. 
-
-Currently the source editor window must be in focus before calling function, i.e. if 
-you selected some code in source editor but moved focus to console before calling function, the addin will not work. There is a `getSourceEditorContext()` function in `rstudioapi` to solve this, but it is only available after RStudio version `0.99.1111`, which is only available as preview version. I plan to move to this function in future.
-
-### Helper with clipboard
-Copy text into clipboard, put cursor to desired position. Each function will insert formated text to current cursor position. This works in both source editor and console.
+The [formatR](http://yihui.name/formatR/) package have a related feature, though it will only evaluate valid script and put results in comments.
 
 ![unwrap](/inst/demo/unwrap.gif)
 * Misc - Unwrap text
