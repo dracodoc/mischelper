@@ -64,7 +64,7 @@ benchmark <- function(){
   selection_end <- context$selection[[1]]$range$end
   if (any(selection_start != selection_end)) { # text selected
     selected <- context$selection[[1]]$text
-    formated <- stringr::str_c("microbenchmark::microbenchmark({\n",
+    formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
       selected, "}, times = 10)")
     rstudioapi::sendToConsole(formated, execute = TRUE)
   }
