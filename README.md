@@ -6,8 +6,10 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
-*2016.09.09  Added feature to format console input and output*
-*2016.09.17  Used expression name instead of full expression in microbenchmark printout*
+
+_2016.09.09  Added feature to format console input and output_
+
+_2016.09.17  Used expression name instead of full expression in microbenchmark printout_
 
 ## Installation
 To install:
