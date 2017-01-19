@@ -4,7 +4,7 @@
 \alias{benchmark}
 \title{microbenchmark selected}
 \usage{
-benchmark()
+benchmark(runs = 10)
 }
 \description{
 microbenchmark selected code for 10 runs in console without changing the

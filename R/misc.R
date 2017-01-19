@@ -58,16 +58,27 @@ flip_windows_path <- function(){
 #'
 #' @export
 #'
-benchmark <- function(){
+benchmark <- function(runs = 10){
   context <- rstudioapi::getActiveDocumentContext()
   selection_start <- context$selection[[1]]$range$start
   selection_end <- context$selection[[1]]$range$end
   if (any(selection_start != selection_end)) { # text selected
     selected <- context$selection[[1]]$text
     formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
-      selected, "}, times = 10)")
+      selected, "}, times = ,", runs, ")")
     rstudioapi::sendToConsole(formated, execute = TRUE)
   }
+}
+
+#' time selected code
+#'
+#' Easier way to measure time cost of expression or selected code. Underthehood
+#' it's just microbenchmark run once instead of 10.
+#'
+#' @export
+#'
+time_it <- function(){
+  benchmark(1)
 }
 
 #' profvis selected

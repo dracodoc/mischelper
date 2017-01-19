@@ -13,6 +13,11 @@ Description: convert "\" in clipboard to "/", then paste into current cursor pos
 Binding: flip_windows_path
 Interactive: false
 
+Name: Misc - time it
+Description: microbenchmark selected code with 1 runs in console
+Binding: time_it
+Interactive: false
+
 Name: Misc - microbenchmark
 Description: microbenchmark selected code with 10 runs in console
 Binding: benchmark
