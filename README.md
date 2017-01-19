@@ -13,6 +13,8 @@ _2016.09.17  Used expression name instead of full expression in microbenchmark p
 
 _2017.01.19  Added a simple timing menu which is just one time run microbenchmark_
 
+_2017.01.19  I just found the function `readClipboard` only works in windows. So some of the functions will not work in Mac if clipboard was used. Will check if there is a generic apporach to solve this._
+
 ## Installation
 To install:
 * Install RStudio newest release or preview version. (Version 0.99.903 has a bug to run microbenchmark 3 times. Newer preview version don't have this bug.)
