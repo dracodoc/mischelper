@@ -13,7 +13,7 @@ _2016.09.17  Used expression name instead of full expression in microbenchmark p
 
 _2017.01.19  Added a simple timing menu which is just one time run microbenchmark_
 
-_2017.01.19  I just found the function `readClipboard` only works in windows. So some of the functions will not work in Mac if clipboard was used. Will check if there is a generic apporach to solve this._
+_2017.01.19  I just found the function `readClipboard` only works in windows. So some of the clipboard related functions will not work in Mac. Will check if there is a generic apporach to solve this._
 
 ## Installation
 To install:
