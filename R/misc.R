@@ -65,7 +65,7 @@ benchmark <- function(runs = 10){
   if (any(selection_start != selection_end)) { # text selected
     selected <- context$selection[[1]]$text
     formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
-      selected, "}, times = ,", runs, ")")
+      selected, "}, times = ", runs, ")")
     rstudioapi::sendToConsole(formated, execute = TRUE)
   }
 }
