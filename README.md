@@ -7,15 +7,17 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
-_2016.09.09  Added feature to format console input and output_
 
-_2016.09.17  Used expression name instead of full expression in microbenchmark printout_
 
-_2017.01.19  Added a simple timing menu which is just one time run microbenchmark_
+_2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
 
 _2017.01.19  I just found the function `readClipboard` only works in windows. So some of the clipboard related functions will not work in Mac. Will check if there is a generic apporach to solve this._
 
-_2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
+_2017.01.19  Added a simple timing menu which is just one time run microbenchmark_
+
+_2016.09.17  Used expression name instead of full expression in microbenchmark printout_
+
+_2016.09.09  Added feature to format console input and output_
 
 ## Installation
 To install:
