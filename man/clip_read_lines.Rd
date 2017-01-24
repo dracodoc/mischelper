@@ -13,4 +13,7 @@ character vector
 If windows, call \code{utils::readClipboard()}. If mac os, use
 \code{pipe("pbpaste")}.
 }
+\examples{
+clip_read_lines()
+}
 

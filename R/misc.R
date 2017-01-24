@@ -5,6 +5,8 @@
 #'
 #' @return character vector
 #' @export
+#' @examples
+#' clip_read_lines()
 clip_read_lines <- function(){
   os <- Sys.info()[['sysname']]
   if (os == "Windows") {
@@ -25,9 +27,13 @@ clip_read_lines <- function(){
 #' If windows, call \code{utils::writeClipboard()}. If mac os, use
 #' \code{pipe("pbcopy", "w")}.
 #'
+#' Note there could be an extra new line in the end for mac os version.
+#'
 #' @param lines character vector
 #'
 #' @export
+#' @examples
+#' clip_write_lines(c("line 1", "line 2 \n and line 3"))
 clip_write_lines <- function(lines) {
   os <- Sys.info()[['sysname']]
   if (os == "Windows") {

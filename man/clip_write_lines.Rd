@@ -13,4 +13,10 @@ clip_write_lines(lines)
 If windows, call \code{utils::writeClipboard()}. If mac os, use
 \code{pipe("pbcopy", "w")}.
 }
+\details{
+Note there could be an extra new line in the end for mac os version.
+}
+\examples{
+clip_write_lines(c("line 1", "line 2 \\n and line 3"))
+}
 
