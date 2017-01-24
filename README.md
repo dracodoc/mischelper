@@ -15,7 +15,8 @@ _2017.01.19  Added a simple timing menu which is just one time run microbenchmar
 
 _2017.01.19  I just found the function `readClipboard` only works in windows. So some of the clipboard related functions will not work in Mac. Will check if there is a generic apporach to solve this._
 
-2
+_2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
+
 ## Installation
 To install:
 * Install RStudio newest release or preview version. (Version 0.99.903 has a bug to run microbenchmark 3 times. Newer preview version don't have this bug.)

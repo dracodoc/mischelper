@@ -1,3 +1,48 @@
+#' Read windows/mac clipboard into lines
+#'
+#' If windows, call \code{utils::readClipboard()}. If mac os, use
+#' \code{pipe("pbpaste")}.
+#'
+#' @return character vector
+#' @export
+clip_read_lines <- function(){
+  os <- Sys.info()[['sysname']]
+  if (os == "Windows") {
+    return(utils::readClipboard())
+  } else if (os == "Darwin") {
+    pb_read_lines <- function(){
+      clip_r_mac <- pipe("pbpaste")
+      lines <- readLines(clip_r_mac)
+      close(clip_r_mac)
+      return(lines)
+    }
+    return(pb_read_lines())
+  }
+}
+
+#' Write lines into windows/mac clipboard
+#'
+#' If windows, call \code{utils::writeClipboard()}. If mac os, use
+#' \code{pipe("pbcopy", "w")}.
+#'
+#' @param lines character vector
+#'
+#' @export
+clip_write_lines <- function(lines) {
+  os <- Sys.info()[['sysname']]
+  if (os == "Windows") {
+    return(utils::writeClipboard(lines))
+  } else if (os == "Darwin") {
+    pb_write_lines <- function(lines){
+      clip_w_mac <- pipe("pbcopy", "w")
+      # if using write, will have extra new line in end
+      cat(lines, file = clip_w_mac, sep = "\n")
+      close(clip_w_mac)  # close to flush
+    }
+    return(pb_write_lines(lines))
+  }
+}
+
 #' Unwrap text
 #'
 #' \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
@@ -8,7 +53,8 @@
 #' @export
 #'
 unwrap <- function(extra_blank_line = FALSE) {
-  clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
+  # clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
+  clipboard <- stringr::str_trim(clip_read_lines(), side = "right")
   # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
   non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
   # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
@@ -43,7 +89,7 @@ unwrap_extra_blank <- function(){
 #' @export
 #'
 flip_windows_path <- function(){
-  p2 <- stringr::str_replace_all(utils::readClipboard(), "\\\\", "/")
+  p2 <- stringr::str_replace_all(clip_read_lines(), "\\\\", "/")
   context <- rstudioapi::getActiveDocumentContext()
   rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
 }
@@ -114,7 +160,7 @@ profv <- function(){
 #' @export
 #'
 format_console <- function(){
-  input_lines <- utils::readClipboard()
+  input_lines <- clip_read_lines()
   empty_index <- stringr::str_detect(input_lines, "^\\s*$")
   commands_index <- stringr::str_detect(input_lines, "^\\+|^>")
   input_lines[!(commands_index | empty_index)] <-
@@ -123,7 +169,7 @@ format_console <- function(){
     stringr::str_replace_all(input_lines[commands_index], "^\\+", " ")
   input_lines[commands_index] <-
     stringr::str_replace_all(input_lines[commands_index], "^>\\s?", "")
-  utils::writeClipboard(input_lines)
+  clip_write_lines(input_lines)
   output <- stringr::str_c(input_lines, "\n", collapse = "")
   context <- rstudioapi::getActiveDocumentContext()
   rstudioapi::insertText(context$selection[[1]]$range, output, id = context$id)
