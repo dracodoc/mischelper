@@ -155,6 +155,22 @@ profv <- function(){
   }
 }
 
+#' View selected list or object with listviewer
+#'
+#' Select a list or object, view it with listviewer in viewer pane
+#'
+#' @export
+view_list <- function(){
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    formated <- stringr::str_c("listviewer::jsonedit(",
+      selected, ', mode = "view", modes = c("code", "view"))')
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
+}
 
 #' Format console
 #'

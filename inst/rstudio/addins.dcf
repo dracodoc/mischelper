@@ -1,3 +1,8 @@
+Name: Misc - View list or object
+Description: Select a list or object, view it with listviewer in viewer pane
+Binding: view_list
+Interactive: false
+
 Name: Misc - Unwrap text
 Description: Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
 Binding: unwrap
