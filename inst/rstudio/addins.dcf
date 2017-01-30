@@ -1,5 +1,5 @@
-Name: Misc - View list or object
-Description: Select a list or object, view it with listviewer in viewer pane
+Name: Misc - View list
+Description: Select a list, view it with listviewer in viewer pane
 Binding: view_list
 Interactive: false
 

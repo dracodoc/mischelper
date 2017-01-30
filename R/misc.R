@@ -155,9 +155,9 @@ profv <- function(){
   }
 }
 
-#' View selected list or object with listviewer
+#' View selected list with listviewer
 #'
-#' Select a list or object, view it with listviewer in viewer pane
+#' Select a list, view it with listviewer in viewer pane
 #'
 #' @export
 view_list <- function(){

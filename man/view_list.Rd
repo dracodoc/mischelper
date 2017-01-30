@@ -2,11 +2,11 @@
 % Please edit documentation in R/misc.R
 \name{view_list}
 \alias{view_list}
-\title{View selected list or object with listviewer}
+\title{View selected list with listviewer}
 \usage{
 view_list()
 }
 \description{
-Select a list or object, view it with listviewer in viewer pane
+Select a list, view it with listviewer in viewer pane
 }
 
