@@ -11,7 +11,7 @@ _2017.01.29 Added feature to call [listviewer](https://github.com/timelyportfoli
 
 Just select the list or object then click addin menu or assign a keyboard shortcut.
 
-![listviewer](/inst/demo/listview.png)
+![listviewer](/inst/demo/listview.gif)
 
 _2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
 
