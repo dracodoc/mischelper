@@ -7,6 +7,16 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
+_2017.02.01 I use `str()` a lot to inspect lists or objects. In RStudio you can expand a list/object in environment pane which is just `str()` output, however the space is often too limited to get an overview. If running `str()` in console, it could also need quite some scrolling.
+
+At first I tried to convert `str()` output into a nested list and view it with `listviewer`. However I didn't find a good way to show some meta info of an item, which should be at same level of item and attached to the item.
+
+Then I just parse the output and tag each line with tags, generate an html file then styling it with css. To use the feature just select the list/obj in RStudio source editor or console, click addin menu `Misc - View str()`. Or you can call function directly with `mischelper::render_str()`.
+
+![render](/inst/demo/render.gif)
+
+The css styling can be customized easily. Use chrome/firefox developer tool to inspect the opened page, select the item and edit the cooresponding css, and you can see result immediately. Once you are satisfied with the changes, save the change to css in package, which is located in `system.file("css", "str_render.css", package = "mischelper")`._
+
 _2017.01.29 Added feature to call [listviewer](https://github.com/timelyportfolio/listviewer) for selected list or object. The listviewer package itself registered an addin menu but I don't like it to be a modal dialog blocking R session, and I don't want to enable the edit mode. I think edit to list should be done in program so it can be tracked._
 
 Just select the list or object then click addin menu or assign a keyboard shortcut.
