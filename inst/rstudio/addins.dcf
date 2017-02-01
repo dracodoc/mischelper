@@ -32,3 +32,8 @@ Name: Misc - Format console
 Description: Format console input and output to script
 Binding: format_console
 Interactive: false
+
+Name: Misc - View str()
+Description: Render str() output in html with style
+Binding: render_addin
+Interactive: false

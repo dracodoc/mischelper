@@ -16,5 +16,6 @@ Imports:
     stringi,
     magrittr,
     microbenchmark,
-    profvis
+    profvis,
+    data.table
 RoxygenNote: 5.0.1
