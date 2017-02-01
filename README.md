@@ -7,7 +7,9 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
-_2017.02.01 I use `str()` a lot to inspect lists or objects. In RStudio you can expand a list/object in environment pane which is just `str()` output, however the space is often too limited to get an overview. If running `str()` in console, it could also need quite some scrolling.
+**2017.02.01**
+
+I use `str()` a lot to inspect lists or objects. In RStudio you can expand a list/object in environment pane which is just `str()` output, however the space is often too limited to get an overview. If running `str()` in console, it could also need quite some scrolling.
 
 At first I tried to convert `str()` output into a nested list and view it with `listviewer`. However I didn't find a good way to show some meta info of an item, which should be at same level of item and attached to the item.
 
@@ -15,23 +17,23 @@ Then I just parse the output and tag each line with tags, generate an html file 
 
 ![render](/inst/demo/render.gif)
 
-The css styling can be customized easily. Use chrome/firefox developer tool to inspect the opened page, select the item and edit the cooresponding css, and you can see result immediately. Once you are satisfied with the changes, save the change to css in package, which is located in `system.file("css", "str_render.css", package = "mischelper")`._
+The css styling can be customized easily. Use chrome/firefox developer tool to inspect the opened page, select the item and edit the cooresponding css, and you can see result immediately. Once you are satisfied with the changes, save the change to css in package, which is located in `system.file("css", "str_render.css", package = "mischelper")`.
 
-_2017.01.29 Added feature to call [listviewer](https://github.com/timelyportfolio/listviewer) for selected list or object. The listviewer package itself registered an addin menu but I don't like it to be a modal dialog blocking R session, and I don't want to enable the edit mode. I think edit to list should be done in program so it can be tracked._
+**2017.01.29** 
+
+Added feature to call [listviewer](https://github.com/timelyportfolio/listviewer) for selected list or object. The listviewer package itself registered an addin menu but I don't like it to be a modal dialog blocking R session, and I don't want to enable the edit mode. I think edit to list should be done in program so it can be tracked.
 
 Just select the list or object then click addin menu or assign a keyboard shortcut.
 
 ![listviewer](/inst/demo/listview.gif)
 
-_2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
+**2017.01.24** Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details.
 
-_2017.01.19  I just found the function `readClipboard` only works in windows. So some of the clipboard related functions will not work in Mac. Will check if there is a generic apporach to solve this._
+**2017.01.19** Added a simple timing menu which is just one time run microbenchmark
 
-_2017.01.19  Added a simple timing menu which is just one time run microbenchmark_
+**2016.09.17** Used expression name instead of full expression in microbenchmark printout
 
-_2016.09.17  Used expression name instead of full expression in microbenchmark printout_
-
-_2016.09.09  Added feature to format console input and output_
+**2016.09.09** Added feature to format console input and output
 
 
 ## Installation
