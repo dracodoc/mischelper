@@ -1,0 +1,48 @@
+@charset "UTF-8";
+body {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.5em;
+}
+.str__slot {color: #00BCD4;}
+.str__attribute {color: #795548;}
+.str__list {color: #3F51B5;}
+.str__key{
+	font-weight: bold;
+}
+.str__value {
+    //text-decoration: underline;
+}
+.depth_0{
+	//text-decoration: underline;
+}
+.depth_1 {
+	text-indent: 1.2em;
+}
+.depth_2 {
+	text-indent: 3em;
+}
+
+.depth_3 {
+	text-indent: 4em;
+}
+.depth_4 {
+	text-indent: 6em;
+}
+.chr {
+	color: green;
+}
+.num {
+	color: #9C27B0;
+}
+.int{
+	color: #9C27B0;
+}
+.List {
+	color: #F44336;
+}
+.Class{
+	color: purple;
+}
+.Named{
+	color: #3F51B5;
+}

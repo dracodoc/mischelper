@@ -7,7 +7,11 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
+_2017.01.29 Added feature to call [listviewer](https://github.com/timelyportfolio/listviewer) for selected list or object. The listviewer package itself registered an addin menu but I don't like it to be a modal dialog blocking R session, and I don't want to enable the edit mode. I think edit to list should be done in program so it can be tracked._
 
+Just select the list or object then click addin menu or assign a keyboard shortcut.
+
+![listviewer](/inst/demo/listview.gif)
 
 _2017.01.24 Added mac os clipboard functions. Now the package should work in both windows and mac. The functions are also available for use if you want. Check `?mischelper::clip_read_lines`, `?mischelper::clip_write_lines` for more details._
 
@@ -18,6 +22,7 @@ _2017.01.19  Added a simple timing menu which is just one time run microbenchmar
 _2016.09.17  Used expression name instead of full expression in microbenchmark printout_
 
 _2016.09.09  Added feature to format console input and output_
+
 
 ## Installation
 To install:

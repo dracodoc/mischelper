@@ -18,4 +18,5 @@ Imports:
     microbenchmark,
     profvis,
     data.table
+    listviewer
 RoxygenNote: 5.0.1

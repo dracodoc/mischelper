@@ -1,0 +1,92 @@
+#' Render str() output in html with style
+#'
+#' If the output of \code{str()} is long, user can easily get lost in scrolling.
+#' This function convert output into html with tag classes and render it with
+#' style. You can customize the style by experimenting with chrome/firefox
+#' developer tools first, then save to css. The css is located in
+#' \code{system.file("css", "str_render.css", package = "mischelper")}
+#'
+#' By default a browser window will be opened because it is intended for long
+#' output.
+#'
+#' @param obj the object/variable to be inspected
+#'
+#' @export
+#' @import data.table
+render_str <- function(obj) {
+  str_lines <- capture.output(str(obj))
+  lines_dt <- data.table(line = str_lines)
+  lines_dt[, depth := str_count(str_extract(line, "^[\\.\\s]*"), "\\.\\.")]
+  lines_dt[, row_no := .I]
+  # symbols work as type identifier only in leading position
+  lines_dt[str_detect(line, "^[^.\\s]"), type := "meta"]
+  lines_dt[str_detect(line, "[.\\s]*\\$"), type := "list"]
+  lines_dt[str_detect(line, "[.\\s]*@"), type := "slot"]
+  lines_dt[str_detect(line, "[.\\s]*- attr"), type := "attribute"]
+  lines_dt[type == "meta", c("key", "value") :=
+             list("metadata", line), by = row_no]
+  # the : in "key:value"" : can be matched to : in "int [1:2]"
+  lines_dt[type == "list", c("key", "value") :=
+             as.list(str_match(line, ".*(\\$\\s[^:]*):(.*)"))[2:3],
+           by = row_no]
+  lines_dt[type == "slot", c("key", "value") :=
+             as.list(str_match(line, ".*(@\\s[^:]*):(.*)"))[2:3],
+           by = row_no]
+  lines_dt[type == "attribute", c("key", "value") :=
+             as.list(str_match(line, ".*(-\\sattr.*)=(.*)"))[2:3],
+           by = row_no]
+  # trim spaces. esp the slot part have some spaces after key
+  lines_dt[, key := str_trim(key)]
+  lines_dt[, value := str_trim(value)]
+  # top line as window title and str title
+  lines_dt[1, type := "desc"]
+  # add some item specific class
+  lines_dt[, item_class := paste0("str__", type, " depth_", depth)]
+  lines_dt[, value_class := paste0("str__value ",
+                                   str_trim(str_extract(value, "^\\s?[[:word:]]*")))]
+  # ui ----
+  ui <- miniPage(
+    includeCSS(system.file("css", "str_render.css", package = "mischelper")),
+    gadgetTitleBar(paste0("html view of str(", deparse(substitute(obj)), ")")),
+    miniContentPanel(
+      htmlOutput("main")
+    )
+  )
+  # server ----
+  server <- function(input, output, session) {
+    ## Your reactive logic goes here.
+    getPage <- function() {
+      # return(includeHTML("str_buff.html"))
+      tag_list <- vector("list", length = nrow(lines_dt))
+      for (i in 1:nrow(lines_dt)) {
+        tag_list[[i]] <- tags$div(class = lines_dt[i, item_class],
+                                  tags$span(lines_dt[i, key], class = "str__key"),
+                                  tags$span(" : ", class = "str__key_value_sp"),
+                                  tags$span(class = lines_dt[i, value_class],
+                                            lines_dt[i, value]))
+      }
+      return(tag_list)
+    }
+    output$main <- renderUI({getPage()})
+    observeEvent(input$done, {
+      stopApp()
+    })
+  }
+  # run in browser since the main goal is to view bigger output
+  runGadget(ui, server, viewer = browserViewer())
+}
+
+#' View obj/variable \code{str()} output in html view by addin
+#'
+#' @export
+render_addin <- function() {
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    cmd <- stringr::str_c("mischelper::render_str(", selected, ")")
+    rstudioapi::sendToConsole(cmd, execute = TRUE)
+  }
+}
+
