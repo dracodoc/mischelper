@@ -11,6 +11,6 @@ export(render_str)
 export(time_it)
 export(unwrap)
 export(unwrap_extra_blank)
-import(data.table)
 export(view_list)
-
+import(data.table)
+import(stringr)

@@ -12,7 +12,7 @@
 #' @param obj the object/variable to be inspected
 #'
 #' @export
-#' @import data.table
+#' @import data.table stringr
 render_str <- function(obj) {
   str_lines <- capture.output(str(obj))
   lines_dt <- data.table(line = str_lines)
@@ -45,11 +45,11 @@ render_str <- function(obj) {
   lines_dt[, value_class := paste0("str__value ",
                                    str_trim(str_extract(value, "^\\s?[[:word:]]*")))]
   # ui ----
-  ui <- miniPage(
-    includeCSS(system.file("css", "str_render.css", package = "mischelper")),
-    gadgetTitleBar(paste0("html view of str(", deparse(substitute(obj)), ")")),
-    miniContentPanel(
-      htmlOutput("main")
+  ui <- miniUI::miniPage(
+    shiny::includeCSS(system.file("css", "str_render.css", package = "mischelper")),
+    miniUI::gadgetTitleBar(paste0("html view of str(", deparse(substitute(obj)), ")")),
+    miniUI::miniContentPanel(
+      shiny::htmlOutput("main")
     )
   )
   # server ----
@@ -59,21 +59,21 @@ render_str <- function(obj) {
       # return(includeHTML("str_buff.html"))
       tag_list <- vector("list", length = nrow(lines_dt))
       for (i in 1:nrow(lines_dt)) {
-        tag_list[[i]] <- tags$div(class = lines_dt[i, item_class],
-                                  tags$span(lines_dt[i, key], class = "str__key"),
-                                  tags$span(" : ", class = "str__key_value_sp"),
-                                  tags$span(class = lines_dt[i, value_class],
-                                            lines_dt[i, value]))
+        tag_list[[i]] <- shiny::tags$div(class = lines_dt[i, item_class],
+                            shiny::tags$span(lines_dt[i, key], class = "str__key"),
+                            shiny::tags$span(" : ", class = "str__key_value_sp"),
+                            shiny::tags$span(class = lines_dt[i, value_class],
+                                                              lines_dt[i, value]))
       }
       return(tag_list)
     }
-    output$main <- renderUI({getPage()})
-    observeEvent(input$done, {
-      stopApp()
+    output$main <- shiny::renderUI({getPage()})
+    shiny::observeEvent(input$done, {
+      shiny::stopApp()
     })
   }
   # run in browser since the main goal is to view bigger output
-  runGadget(ui, server, viewer = browserViewer())
+  shiny::runGadget(ui, server, viewer = shiny::browserViewer())
 }
 
 #' View obj/variable \code{str()} output in html view by addin
