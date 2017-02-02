@@ -7,7 +7,7 @@
 #' \code{system.file("css", "str_render.css", package = "mischelper")}
 #'
 #' By default a browser window will be opened because it is intended for long
-#' output. The \code{info} label and the name of input object are added for clarity. Since they are not part of original \code{str()} output, \code{()} are used.
+#' output. The \code{info} label and the name of input object are added for clarity. Since they are not part of original \code{str()} output, \code{(info)} are used.
 #'
 #' @param obj the object/variable to be inspected
 #'
