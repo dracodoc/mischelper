@@ -54,9 +54,11 @@ The packages `stringr`, `stringi`, `magrittr`, `microbenchmark`, `profvis` will 
 Functions can be accessed from the drop down list in Addin toolbar button or with keyboard shortcuts. All functions are prefixed with `Misc`.
 
 If you feel you don't need all the functions and they take too much space in the Addin drop down list, you can prevent some to be registered by RStudio. 
-- find the package installation folder with `devtools::inst("mischelper")`.
-- edit `rstudio\addins.dcf`, remove the sections you don't need.
+- edit the control file by
+  `file.edit(system.file("rstudio", "addins.dcf", package = "mischelper"))`
+- remove the sections you don't need.
 - restart R session.
+- You can always restore to default by installing the package again if there is something wrong with the edit.
 
 ### Keyboard shortcuts
 You can assign keyboard shortcut to functions:

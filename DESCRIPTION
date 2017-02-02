@@ -17,6 +17,8 @@ Imports:
     magrittr,
     microbenchmark,
     profvis,
-    data.table
+    data.table,
+    shiny,
+    miniUI,
     listviewer
 RoxygenNote: 5.0.1
