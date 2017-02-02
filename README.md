@@ -19,6 +19,10 @@ Then I just parse the output and tag each line with tags, generate an html file 
 
 The css styling can be customized easily. Use chrome/firefox developer tool to inspect the opened page, select the item and edit the cooresponding css, and you can see result immediately. Once you are satisfied with the changes, save the change to css in package, which is located in `system.file("css", "str_render.css", package = "mischelper")`.
 
+The `info` label and the name of input object are added for clarity. Since they are not part of original `str()` output, `()` are used to separate them.
+
+Note this only works for list，data frame or objects that have some nested structure. It doesn't work for simple vectors, but there is not much need of a html view for the simple structure anyway.
+
 **2017.01.29** 
 
 Added feature to call [listviewer](https://github.com/timelyportfolio/listviewer) for selected list or object. The listviewer package itself registered an addin menu but I don't like it to be a modal dialog blocking R session, and I don't want to enable the edit mode. I think edit to list should be done in program so it can be tracked.
