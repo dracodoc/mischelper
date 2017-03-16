@@ -8,9 +8,9 @@ Description: Remove unneeded hard line breaks of text in clipboard, then paste i
 Binding: unwrap
 Interactive: false
 
-Name: Misc - Unwrap with blank
-Description: Remove hard line breaks in clipboard, add extra blank line between paragraphs then paste into the cursor position.
-Binding: unwrap_extra_blank
+Name: Misc - clip to data frame
+Description: read clipboard, convert csv into data frame, open data
+Binding: clip_2_df
 Interactive: false
 
 Name: Misc - Flip windows path

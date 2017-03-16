@@ -20,5 +20,6 @@ Imports:
     data.table,
     shiny,
     miniUI,
-    listviewer
+    listviewer,
+    clipr
 RoxygenNote: 5.0.1
