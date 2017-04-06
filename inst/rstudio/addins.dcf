@@ -8,7 +8,7 @@ Description: Remove unneeded hard line breaks of text in clipboard, then paste i
 Binding: unwrap
 Interactive: false
 
-Name: Misc - clip to data frame
+Name: Misc - Clip to data frame
 Description: read clipboard, convert csv into data frame, open data
 Binding: clip_2_df
 Interactive: false
@@ -18,7 +18,7 @@ Description: convert "\" in clipboard to "/", then paste into current cursor pos
 Binding: flip_windows_path
 Interactive: false
 
-Name: Misc - time it
+Name: Misc - Time it
 Description: microbenchmark selected code with 1 runs in console
 Binding: time_it
 Interactive: false
@@ -28,9 +28,9 @@ Description: microbenchmark selected code with 10 runs in console
 Binding: benchmark
 Interactive: false
 
-Name: Misc - profvis
-Description: profvis selected code in console
-Binding: profv
+Name: Misc - Render RMarkdown
+Description: Render RMarkdown in global environment
+Binding: render_rmd
 Interactive: false
 
 Name: Misc - Format console

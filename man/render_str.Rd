@@ -20,4 +20,3 @@ developer tools first, then save to css. The css is located in
 By default a browser window will be opened because it is intended for long
 output. The \code{info} label and the name of input object are added for clarity. Since they are not part of original \code{str()} output, \code{(info)} are used.
 }
-

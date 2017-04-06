@@ -13,4 +13,3 @@ read console input and output from clipboard, format as script
 Formated script is written back to clipboard, and inserted to current cursor
 location
 }
-

@@ -14,4 +14,3 @@ source code.
 \code{microbenchmark()} parameters can be changed by recalling history in
 console then editing the last line.
 }
-

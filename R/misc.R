@@ -153,27 +153,36 @@ time_it <- function(){
   benchmark(1)
 }
 
-#' profvis selected
+#' Render RMarkdown in global environment
 #'
-#' profvis selected code in console without changing source code.
+#' Knit document will start from scratch, this will use global environment
+#' instead. So you don't have to run some expensive operations like read huge
+#' file from disk every time in rendering.
 #'
 #' @export
 #'
-profv <- function(){
-  # if (!requireNamespace("profvis", quietly = TRUE)) {
-  #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
-  #          call. = FALSE)
-  # }
+render_rmd <- function(){
   context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
-    formated <- stringr::str_c("profvis::profvis({\n",
-      selected, "})")
-    rstudioapi::sendToConsole(formated, execute = TRUE)
-  }
+  formated <- paste0('rmarkdown::render("', context$path, '")')
+  rstudioapi::sendToConsole(formated, execute = TRUE)
 }
+
+# not used now since there is menu in RStudio
+# profv <- function(){
+#   # if (!requireNamespace("profvis", quietly = TRUE)) {
+#   #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
+#   #          call. = FALSE)
+#   # }
+#   context <- rstudioapi::getActiveDocumentContext()
+#   selection_start <- context$selection[[1]]$range$start
+#   selection_end <- context$selection[[1]]$range$end
+#   if (any(selection_start != selection_end)) { # text selected
+#     selected <- context$selection[[1]]$text
+#     formated <- stringr::str_c("profvis::profvis({\n",
+#       selected, "})")
+#     rstudioapi::sendToConsole(formated, execute = TRUE)
+#   }
+# }
 
 #' View selected list with listviewer
 #'

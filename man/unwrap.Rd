@@ -13,4 +13,3 @@ unwrap(extra_blank_line = FALSE)
 \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
 paste into current cursor position.
 }
-

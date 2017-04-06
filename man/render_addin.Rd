@@ -9,4 +9,3 @@ render_addin()
 \description{
 View obj/variable \code{str()} output in html view by addin
 }
-

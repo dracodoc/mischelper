@@ -10,4 +10,3 @@ flip_windows_path()
 \code{flip_windows_path} convert "\" in clipboard to "/", then paste into
 current cursor position
 }
-

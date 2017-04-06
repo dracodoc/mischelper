@@ -9,4 +9,3 @@ view_list()
 \description{
 Select a list, view it with listviewer in viewer pane
 }
-

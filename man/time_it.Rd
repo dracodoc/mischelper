@@ -10,4 +10,3 @@ time_it()
 Easier way to measure time cost of expression or selected code. Underthehood
 it's just microbenchmark run once instead of 10.
 }
-

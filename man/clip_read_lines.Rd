@@ -16,4 +16,3 @@ If windows, call \code{utils::readClipboard()}. If mac os, use
 \examples{
 clip_read_lines()
 }
-

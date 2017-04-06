@@ -14,4 +14,3 @@ line between paragraphs, then paste into current cursor position.
 Need this helper because RStudio Addin doesn't support function with
 parameters.
 }
-

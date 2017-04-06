@@ -7,6 +7,18 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
+**2017.04.06**
+
+I just found RStudio have the built-in menu `profvis selected lines` which is same with my `provis` feature. It can be accessed from the `Profile` menu, a wizard toolbar button (which is only available in `.R` file, not in `.Rmd`) or keyboard shortcut `shift-alt-cmd-P` in Mac.
+
+Thus I removed the same feature in my addin, added another feature I found useful: `Render RMarkdown`. 
+
+When you `knit` a `.Rmd` document, all code are evaluated from fresh, independent from the global environment. This follows the reproducible research principles. 
+
+If I do need a strict reproducible report I will knit the complete report, however sometimes I just want a rendered html with some results and plots, and I don't want to run some computational expensive operations again from beginning, like reading a huge dataset from disk and go through every previous step. 
+
+`rmarkdown::render("your_report.Rmd")` will render the document in the global environment, so if you have the data/object exists already it can get the result immedidately. I found this can save a lot of time for me, especially sometimes I need to render several times in editing. 
+
 **2017.02.01**
 
 I use `str()` a lot to inspect lists or objects. In RStudio you can expand a list/object in environment pane which is just `str()` output, however the space is often too limited to get an overview. If running `str()` in console, it could also need quite some scrolling.
