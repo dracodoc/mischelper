@@ -7,6 +7,10 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
+**2017.04.10**
+
+Added a feature that will read csv format data in clipboard, convert to data frame and open Viewer in RStudio, write markdown table format back to clipboard so you can use it in markdown document. The dataframe itself is also returned.
+
 **2017.04.06**
 
 I just found RStudio have the built-in menu `profvis selected lines` which is same with my `provis` feature. It can be accessed from the `Profile` menu, a wizard toolbar button (which is only available in `.R` file, not in `.Rmd`) or keyboard shortcut `shift-alt-cmd-P` in Mac.

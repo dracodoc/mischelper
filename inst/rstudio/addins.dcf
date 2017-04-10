@@ -9,7 +9,7 @@ Binding: unwrap
 Interactive: false
 
 Name: Misc - Clip to data frame
-Description: read clipboard, convert csv into data frame, open data
+Description: read clipboard, convert csv into data frame, open data, write markdown table back to clipboard
 Binding: clip_2_df
 Interactive: false
 

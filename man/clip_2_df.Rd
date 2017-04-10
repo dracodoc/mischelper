@@ -11,5 +11,5 @@ the data frame
 }
 \description{
 Read windows/mac/linux clipboard, convert csv into data frame, open data
-viewer, return the data frame
+viewer, write markdown table back to clipboard, return the data frame
 }

@@ -21,5 +21,6 @@ Imports:
     shiny,
     miniUI,
     listviewer,
-    clipr
+    clipr,
+    knitr
 RoxygenNote: 6.0.1

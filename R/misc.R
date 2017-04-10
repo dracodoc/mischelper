@@ -2,19 +2,20 @@
 #' read clipboard into data frame
 #'
 #' Read windows/mac/linux clipboard, convert csv into data frame, open data
-#' viewer, return the data frame
+#' viewer, write markdown table back to clipboard, return the data frame
 #'
 #' @return the data frame
 #' @export
 #'
 clip_2_df <- function(){
   lines <- clipr::read_clip()
-  paste0(lines, collapse = "\n")
+  # paste0(lines, collapse = "\n")
   # getting regular data frame so we can use the matrix indexing in next line
   df <- data.table::fread(paste0(lines, collapse = "\n"), na.strings = NULL, data.table = FALSE)
   # we don't want to print NA in table since the actual data don't have NA returned
   df[is.na(df)] <- ""
   View(df)
+  clipr::write_clip(knitr::kable(df, format = "markdown"))
   return(df)
 }
 
