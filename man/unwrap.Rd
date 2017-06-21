@@ -11,5 +11,5 @@ unwrap(extra_blank_line = FALSE)
 }
 \description{
 \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
-paste into current cursor position.
+update the clipboard.
 }

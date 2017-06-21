@@ -6,6 +6,9 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2017.06.21**
+
+The RStudio Environment pane variable name column is too narrow for longnames, so it's difficutl to find the right data frame in long list of similar names. Before RStudio make that column adjustable or use shorter summary description columns, you can select the variable and use `view data frame` to open in data viewer.
 
 **2017.04.10**
 

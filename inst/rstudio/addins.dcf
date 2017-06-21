@@ -42,3 +42,8 @@ Name: Misc - View str()
 Description: Render str() output in html with style
 Binding: render_addin
 Interactive: false
+
+Name: Misc - View data frame
+Description: Open selected data frame in Viewer
+Binding: view_df
+Interactive: false

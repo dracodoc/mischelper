@@ -203,6 +203,25 @@ view_list <- function(){
   }
 }
 
+#' View selected data frame
+#'
+#' The RStudio Environment pane variable name column is too narrow for long
+#' names, so difficutl to find the right data frame in long list of similar
+#' names. Select the variable and use shortcut to use data viewer on it.
+#'
+#' @export
+
+view_df <- function(){
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    formated <- stringr::str_c("View(", selected, ')')
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
+}
+
 #' Format console
 #'
 #' read console input and output from clipboard, format as script
