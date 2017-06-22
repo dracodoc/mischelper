@@ -10,6 +10,8 @@ These functions are very simple in concept but may save you some time.
 
 The RStudio Environment pane variable name column is too narrow for longnames, so it's difficutl to find the right data frame in long list of similar names. Before RStudio make that column adjustable or use shorter summary description columns, you can select the variable and use `view data frame` to open in data viewer.
 
+You can assign a keyboard shortcut for it using the toolbar menu `Addins -> Browse addins -> keyboard shortcuts`.
+
 **2017.04.10**
 
 Added a feature that will read csv format data in clipboard, convert to data frame and open Viewer in RStudio, write markdown table format back to clipboard so you can use it in markdown document. The dataframe itself is also returned.
