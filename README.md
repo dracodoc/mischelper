@@ -6,6 +6,10 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2017.06.27**
+
+`printc` will generate the literal `c("a", "b")` format from the vector `c("a", "b")`. For example I want to rename some columns but I don't want to rely on number index which can break later, so I just use `printc(names(mtcars)[1:3])` then copy the result to code.
+
 **2017.06.21**
 
 The RStudio Environment pane variable name column is too narrow for longnames, so it's difficutl to find the right data frame in long list of similar names. Before RStudio make that column adjustable or use shorter summary description columns, you can select the variable and use `view data frame` to open in data viewer.

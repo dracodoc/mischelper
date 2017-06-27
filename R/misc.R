@@ -246,3 +246,22 @@ format_console <- function(){
   context <- rstudioapi::getActiveDocumentContext()
   rstudioapi::insertText(context$selection[[1]]$range, output, id = context$id)
 }
+#' Generate the literal c() of a character vector
+#'
+#' It's often needed to create a vector literally even the vector can be
+#' obtained in code. For example a sbuset of column names can be get with number
+#' index, but it's not safe to use number index in code. Use this function to
+#' turn the output of number index into literal format, then you can copy the
+#' output to code.
+#'
+#' @param x a vector holding items x1, x2, ...
+#'
+#' @return string of "c("x1", "x2")"
+#' @export
+#'
+#' @examples
+#' printc(names(mtcars)[1:3])
+#'
+printc <- function(x){
+  cat(paste0('c("', paste(x, collapse = '", "'), '")'))
+}
