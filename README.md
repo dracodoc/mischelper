@@ -14,7 +14,11 @@ These functions are very simple in concept but may save you some time.
 
 The RStudio Environment pane variable name column is too narrow for longnames, so it's difficutl to find the right data frame in long list of similar names. Before RStudio make that column adjustable or use shorter summary description columns, you can select the variable and use `view data frame` to open in data viewer.
 
+You can also select an expression (or part of an expression) and use this shortcut to inspect the content. This way you don't need to save it into a temporary variable. It's a great way to quickly explore expressions, and I have found I'm using it many time everyday.
+
 You can assign a keyboard shortcut for it using the toolbar menu `Addins -> Browse addins -> keyboard shortcuts`.
+
+![viewdf](/inst/demo/view_df2.gif)
 
 **2017.04.10**
 
