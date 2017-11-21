@@ -38,6 +38,11 @@ Description: Format console input and output to script
 Binding: format_console
 Interactive: false
 
+Name: Misc - Scan External Functions
+Description: Scan External Functions in selected code or current file
+Binding: scan_externals
+Interactive: false
+
 Name: Misc - View str()
 Description: Render str() output in html with style
 Binding: render_addin

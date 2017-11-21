@@ -217,6 +217,8 @@ view_df <- function(){
   selection_end <- context$selection[[1]]$range$end
   if (any(selection_start != selection_end)) { # text selected
     selected <- context$selection[[1]]$text
+    # this will show "View(get(selected))" in viewer, not optimal
+    # View(get(selected))
     formated <- stringr::str_c("View(", selected, ')')
     rstudioapi::sendToConsole(formated, execute = TRUE)
   }
@@ -264,4 +266,83 @@ format_console <- function(){
 #'
 printc <- function(x){
   cat(paste0('c("', paste(x, collapse = '", "'), '")'))
+}
+# scan external functions ----
+# should organize by funs_inside, so we can replace all usage in one run
+organize_fun_table <- function(dt) {
+  new_dt <- dt[!(fun_inside %in% fun)][, usage := list(list(fun)),
+                                       by = fun_inside]
+  # data.table order sort by C-locale, which sort capitalized letter first
+  unique(new_dt[, .(fun_inside, usage)], by =
+           "fun_inside")[base::order(fun_inside)]
+}
+#' Scan Function Object For External Functions
+#'
+#' @param fun_obj
+#'
+#' @return result table
+#' @export
+#'
+#' @examples mischelper::scan_fun(sort)
+scan_fun <- function(fun_obj) {
+  # function parameter lost its name so have to use generic name
+  organize_fun_table(data.table(fun = "fun_obj",
+             fun_inside = codetools::findGlobals(
+               fun_obj, merge = FALSE)$functions))
+}
+# code string
+scan_string <- function(code_string) {
+  temp_fun <- eval(parse(text = paste0("function() {\n", code_string, "\n}")))
+  organize_fun_table(data.table(fun = "code_string",
+             fun_inside = codetools::findGlobals(
+               temp_fun, merge = FALSE)$functions))
+}
+#' Scan Source File For External Functions
+#'
+#' The file must be able to be sourced without error to be scanned, so packages
+#' or data need to be prepared before scanning.
+#'
+#' @param code_file The path of source file
+#'
+#' @return Result table
+#' @export
+#'
+scan_file <- function(code_file) {
+  source(code_file, local = TRUE, chdir = TRUE)
+  names_in_fun <- ls(sorted = FALSE)
+  funs_in_each_name <- lapply(names_in_fun, function(f_name) {
+    obj <- get(f_name, parent.env(environment()))
+    if (is.function(obj)) {
+      data.table(fun = f_name,
+                 fun_inside = codetools::findGlobals(
+                   obj, merge = FALSE)$functions)
+    }
+  })
+  organize_fun_table(rbindlist(funs_in_each_name))
+}
+#' Scan External Functions
+#'
+#' If some code was selected, scan selected code, otherwise scan current file.
+#' Result table will also be opened in RStudio data viewer. The current file
+#' must be able to be sourced without error to be scanned, so packages or data
+#' need to be prepared before scanning.
+#'
+#' @return A data.table of functions.
+#' @export
+#'
+scan_externals <- function() {
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    external_funs <- scan_string(selected)
+    View(external_funs)
+    external_funs
+  } else {
+    file_path <- rstudioapi::getSourceEditorContext()$path
+    external_funs <- scan_file(file_path)
+    View(external_funs)
+    external_funs
+  }
 }
