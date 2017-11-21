@@ -6,6 +6,18 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2017.11.21**
+
+Sometimes I need to convert existing code into a package, then I need to find all external functions used in code, import package, and change the function usage into full qualified names. This is a cumbersome task. Previously I have to read code line by line, rely on error message of building package to find the functions.
+
+In reading book `Extending R` I found [`XRtools::makeImports`](https://github.com/johnmchambers/XRtools/blob/master/R/makeImports.R) can scan a package and find all packages need to be imported. This doesn't fit my need exactly because I'm still developing a package, and I want all the external functions not packages. Still the source code helped me a lot to get my current solution:
+- With the mischelper addin menu `Scan Externals`, current selected code or current opened file will be scanned, and the result functions table returned.
+![external_funs](/inst/demo/external_funs.png)
+- Note the code or file must be able to be sourced properly to be checked, so you may need to load packages or prepare data before checking.
+- You can also use the exported function `mischelper::scan_fun`, `mischelper::scan_file` directly.
+
+I have another addin `namebrowser` which could scan all installed packages and build a name table of all functions in them. So it's also possible to use that database and give all candidate packages for every external functions found. I'm not sure how many people will want to use that so I didn't do that yet. For now I need to verify each function usage anyway, and with the packages properly loaded, pressing `F1` should tell me the proper package already. If I scan all installed packages, the database may actually give more false positives and make it harder to determine which is the right one.
+
 **2017.06.27**
 
 `printc` will generate the literal `c("a", "b")` format from the vector `c("a", "b")`. For example I want to rename some columns but I don't want to rely on number index which can break later, so I just use `printc(names(mtcars)[1:3])` then copy the result to code.
