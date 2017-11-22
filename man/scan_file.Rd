@@ -4,10 +4,13 @@
 \alias{scan_file}
 \title{Scan Source File For External Functions}
 \usage{
-scan_file(code_file)
+scan_file(code_file, organize = TRUE)
 }
 \arguments{
 \item{code_file}{The path of source file}
+
+\item{organize}{If FALSE, return table of `fun`, `fun_inside`; If TRUE, return
+table of `fun_inside`, `list of fun`}
 }
 \value{
 Result table

@@ -303,11 +303,13 @@ scan_string <- function(code_string) {
 #' or data need to be prepared before scanning.
 #'
 #' @param code_file The path of source file
+#' @param organize If FALSE, return table of `fun`, `fun_inside`; If TRUE, return
+#'   table of `fun_inside`, `list of fun`
 #'
 #' @return Result table
 #' @export
 #'
-scan_file <- function(code_file) {
+scan_file <- function(code_file, organize = TRUE) {
   source(code_file, local = TRUE, chdir = TRUE)
   names_in_fun <- ls(sorted = FALSE)
   funs_in_each_name <- lapply(names_in_fun, function(f_name) {
@@ -318,7 +320,12 @@ scan_file <- function(code_file) {
                    obj, merge = FALSE)$functions)
     }
   })
-  organize_fun_table(rbindlist(funs_in_each_name))
+  res <- rbindlist(funs_in_each_name)
+  if (organize) {
+    organize_fun_table(res)
+  } else {
+    res
+  }
 }
 #' Scan External Functions
 #'
