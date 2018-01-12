@@ -28,6 +28,11 @@ Description: microbenchmark selected code with 10 runs in console
 Binding: benchmark
 Interactive: false
 
+Name: Misc - profvis
+Description: profvis selected code in console
+Binding: profv
+Interactive: false
+
 Name: Misc - Render RMarkdown
 Description: Render RMarkdown in global environment
 Binding: render_rmd

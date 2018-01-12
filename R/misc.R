@@ -169,22 +169,29 @@ render_rmd <- function(){
   rstudioapi::sendToConsole(formated, execute = TRUE)
 }
 
-# not used now since there is menu in RStudio
-# profv <- function(){
-#   # if (!requireNamespace("profvis", quietly = TRUE)) {
-#   #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
-#   #          call. = FALSE)
-#   # }
-#   context <- rstudioapi::getActiveDocumentContext()
-#   selection_start <- context$selection[[1]]$range$start
-#   selection_end <- context$selection[[1]]$range$end
-#   if (any(selection_start != selection_end)) { # text selected
-#     selected <- context$selection[[1]]$text
-#     formated <- stringr::str_c("profvis::profvis({\n",
-#       selected, "})")
-#     rstudioapi::sendToConsole(formated, execute = TRUE)
-#   }
-# }
+#' profvis selected
+#'
+#' profvis selected code in console without changing source code. RStudio have a
+#' similar builtin menu in editor toolbar, but that only works with .R script,
+#' not working in .Rmd or unsaved file.
+#'
+#' @export
+#'
+profv <- function(){
+  if (!requireNamespace("profvis", quietly = TRUE)) {
+      stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
+           call. = FALSE)
+  }
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  if (any(selection_start != selection_end)) { # text selected
+    selected <- context$selection[[1]]$text
+    formated <- stringr::str_c("profvis::profvis({\n",
+      selected, "})")
+    rstudioapi::sendToConsole(formated, execute = TRUE)
+  }
+}
 
 #' View selected list with listviewer
 #'
