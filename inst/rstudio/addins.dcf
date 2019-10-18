@@ -1,3 +1,8 @@
+Name: Misc - Run Shiny as job
+Description: Run current Shiny app as background job, open in browser with live reload
+Binding: run_shiny_as_job
+Interactive: false
+
 Name: Misc - View list
 Description: Select a list, view it with listviewer in viewer pane
 Binding: view_list

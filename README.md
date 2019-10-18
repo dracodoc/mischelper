@@ -6,6 +6,19 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2019.10.18**
+
+Running Shiny apps from RStudio will see current global environment, this has burned me more than once when my app runs fine in development, but failed after deployed because it was depending some global environment data implicitly. A shiny app should almost always run in clean session as it was supposed to be deployed. There is [a issue here](https://github.com/rstudio/rstudio/issues/5190) documented various similar requests so it is in popular need. 
+
+Since the issue has been around for some time and I want to use this as soon as possible, and the feature is easy enough to implement thanks to RStudio jobs and rstudioapi, I just implement it in `mischelper`. Now you can click a button in addin menu and launch your current Shiny app in background.
+
+Some details about my design choices because my implementation is somewhat different from the methods described in other places:
+- One method is to retrieve the random port of launched app then open with RStudio viewer, this also need to translate url for RStudio server. I tried this method then I need to use a fixed port number which is not ideal (otherwise I'm not sure how can I retrieve the port number programmingly), and the app was opened in viewer pane not maximized, which is almost never the user want.
+- Instead I just launch the app with system browser, this solve all the problems.
+- I also put the app directory as job name to help your identify different jobs.
+- I changed the global option `options(shiny.autoreload = TRUE)` but I think this is usually user want. If there are users don't want this or want to make an option I can try to change it. 
+- The job never use global environment, use the app dir as working directory, don't return result back to global environment.
+
 **2017.11.21**
 
 Sometimes I need to convert existing code into a package, then I need to find all external functions used in code, import package, and change the function usage into full qualified names. This is a cumbersome task. Previously I have to read code line by line, rely on error message of building package to find the functions.

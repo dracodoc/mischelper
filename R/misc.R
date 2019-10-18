@@ -1,4 +1,21 @@
-
+#' Run Shiny app as background job
+#'
+#' Run current file in source editor as shiny app in background job, open in browser window, live reload with source changes.
+#'
+#' @return
+#' @export
+#'
+run_shiny_as_job <- function() {
+  options(shiny.autoreload = TRUE)
+  current_context <- rstudioapi::getSourceEditorContext()
+  app_dir <- dirname(current_context$path)
+  script_content <- sprintf("options(shiny.autoreload = TRUE)\n shiny::runApp('%s', launch.browser = TRUE)\n",
+                            app_dir)
+  # use a meaningful file name as this is shown in jobs pane.
+  temp_script <- tempfile(fileext = ".R")
+  cat(script_content, file = temp_script)
+  rstudioapi::jobRunScript(temp_script, name = app_dir, workingDir = app_dir)
+}
 #' read clipboard into data frame
 #'
 #' Read windows/mac/linux clipboard, convert csv into data frame, open data
