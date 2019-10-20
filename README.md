@@ -16,7 +16,7 @@ Some details about my design choices because my implementation is somewhat diffe
 - One method is to retrieve the random port of launched app then open with RStudio viewer, this also need to translate url for RStudio server. I tried this method then I need to use a fixed port number which is not ideal (otherwise I'm not sure how can I retrieve the port number programmingly), and the app was opened in viewer pane not maximized, which is almost never the user want.
 - Instead I just launch the app with system browser, this solve all the problems.
 - I also put the app directory as job name to help your identify different jobs.
-- I changed the global option `options(shiny.autoreload = TRUE)` but I think this is usually user want. If there are users don't want this or want to make an option I can try to change it. 
+- If you want the app to auto reload with source changes, you can use the global option `options(shiny.autoreload = TRUE)`. 
 - The job never use global environment, use the app dir as working directory, don't return result back to global environment.
 
 **2017.11.21**
