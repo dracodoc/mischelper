@@ -10,12 +10,20 @@ run_shiny_as_job <- function() {
   # options(shiny.autoreload = TRUE)
   current_context <- rstudioapi::getSourceEditorContext()
   app_dir <- dirname(current_context$path)
+  # need a label for job. app_dir could be too long to be shown completely. take last two parts
+  dir_parts <- stringr::str_split(app_dir, "/")[[1]]  # rstudio api always return / style even in windows
+  part_count <- length(dir_parts)
+  if (part_count > 2) {
+    job_name <- stringr::str_c(dir_parts[(part_count - 1):part_count], collapse = "/")
+  } else {
+    job_name <- app_dir
+  }
   script_content <- sprintf("shiny::runApp('%s', launch.browser = TRUE)\n",
                             app_dir)
   # use a meaningful file name as this is shown in jobs pane.
   temp_script <- tempfile(fileext = ".R")
   cat(script_content, file = temp_script)
-  rstudioapi::jobRunScript(temp_script, name = app_dir, workingDir = app_dir)
+  rstudioapi::jobRunScript(temp_script, name = job_name, workingDir = app_dir)
 }
 #' read clipboard into data frame
 #'
