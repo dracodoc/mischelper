@@ -4,7 +4,6 @@
 #' browser window, live reload with source changes (if you set
 #' `options(shiny.autoreload = TRUE)`).
 #'
-#' @return
 #' @export
 #'
 run_shiny_as_job <- function() {
@@ -214,10 +213,15 @@ profv <- function(){
 
 #' View selected list with listviewer
 #'
-#' Select a list, view it with listviewer in viewer pane
+#' Select a list, view it with listviewer in viewer pane. This is less relevant
+#' now with RStudio data viewer started to support list.
 #'
 #' @export
 view_list <- function(){
+  if (!requireNamespace("listviewer", quietly = TRUE)) {
+    stop("listviewer needed but not automatically installed.\nInstall the package with install.packages(\"listviewer\")",
+         call. = FALSE)
+  }
   context <- rstudioapi::getActiveDocumentContext()
   selection_start <- context$selection[[1]]$range$start
   selection_end <- context$selection[[1]]$range$end
@@ -229,15 +233,18 @@ view_list <- function(){
   }
 }
 
-#' View selected data frame
+#' Open Data Viewer on Selected expression
 #'
-#' The RStudio Environment pane variable name column is too narrow for long
-#' names, so difficutl to find the right data frame in long list of similar
-#' names. Select the variable and use shortcut to use data viewer on it.
+#' The RStudio Environment pane variable name column could be too narrow for
+#' long names, and it can be difficult to identify one among similar names.
+#' Sometimes it's also useful to check an filter expression on a data.frame.
+#' Select a variable or expression then use this feature to open the data viewer
+#' for it. With RStudio Viewer working on list/objects now, this become even
+#' more useful.
 #'
 #' @export
 
-view_df <- function(){
+view_current <- function(){
   context <- rstudioapi::getActiveDocumentContext()
   selection_start <- context$selection[[1]]$range$start
   selection_end <- context$selection[[1]]$range$end
@@ -250,9 +257,10 @@ view_df <- function(){
   }
 }
 
-#' Format console
+#' Convert Console Print Out to Script
 #'
-#' read console input and output from clipboard, format as script
+#' Read console input and output from clipboard, format as script(remove the >
+#' prompt, convert output as comments).
 #'
 #' Formated script is written back to clipboard, and inserted to current cursor
 #' location

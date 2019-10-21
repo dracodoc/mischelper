@@ -3,19 +3,19 @@ Description: Run current Shiny app as background job, open in browser with live 
 Binding: run_shiny_as_job
 Interactive: false
 
-Name: Misc - View list
-Description: Select a list, view it with listviewer in viewer pane
-Binding: view_list
+Name: Misc - View Selected
+Description: Open selected expression as data frame in Viewer
+Binding: view_current
 Interactive: false
 
-Name: Misc - Unwrap text
-Description: Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
-Binding: unwrap
+Name: Misc - Convert Console to Script
+Description: Format console input and output to script
+Binding: format_console
 Interactive: false
 
-Name: Misc - Clip to data frame
-Description: read clipboard, convert csv into data frame, open data, write markdown table back to clipboard
-Binding: clip_2_df
+Name: Misc - Render RMarkdown
+Description: Render RMarkdown in global environment
+Binding: render_rmd
 Interactive: false
 
 Name: Misc - Flip windows path
@@ -38,14 +38,14 @@ Description: profvis selected code in console
 Binding: profv
 Interactive: false
 
-Name: Misc - Render RMarkdown
-Description: Render RMarkdown in global environment
-Binding: render_rmd
+Name: Misc - Unwrap text
+Description: Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
+Binding: unwrap
 Interactive: false
 
-Name: Misc - Format console
-Description: Format console input and output to script
-Binding: format_console
+Name: Misc - Clip to data frame
+Description: read clipboard, convert csv into data frame, open data, write markdown table back to clipboard
+Binding: clip_2_df
 Interactive: false
 
 Name: Misc - Scan External Functions
@@ -58,7 +58,4 @@ Description: Render str() output in html with style
 Binding: render_addin
 Interactive: false
 
-Name: Misc - View data frame
-Description: Open selected data frame in Viewer
-Binding: view_df
-Interactive: false
+

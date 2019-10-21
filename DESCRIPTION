@@ -1,7 +1,7 @@
 Package: mischelper
 Type: Package
 Title: Collections Of Miscellaneous Helper Functions To Save Some Time
-Version: 0.2.0
+Version: 0.3.0
 Author: Xianghui Dong
 Maintainer: Xianghui Dong <dracodoc@gmail.com>
 Description: Remove unneeded hard line breaks of text in clipboard, then paste.
@@ -13,15 +13,16 @@ LazyData: true
 Imports:
     stringr,
     rstudioapi,
-    stringi,
     magrittr,
     microbenchmark,
     rmarkdown,
     data.table,
     shiny,
     miniUI,
-    listviewer,
     clipr,
     knitr,
     codetools
-RoxygenNote: 6.0.1
+Suggests:
+    profvis,
+    listviewer
+RoxygenNote: 6.1.1
