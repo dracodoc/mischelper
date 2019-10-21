@@ -2,12 +2,13 @@
 % Please edit documentation in R/misc.R
 \name{format_console}
 \alias{format_console}
-\title{Format console}
+\title{Convert Console Print Out to Script}
 \usage{
 format_console()
 }
 \description{
-read console input and output from clipboard, format as script
+Read console input and output from clipboard, format as script(remove the >
+prompt, convert output as comments).
 }
 \details{
 Formated script is written back to clipboard, and inserted to current cursor

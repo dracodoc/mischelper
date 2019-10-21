@@ -7,5 +7,6 @@
 view_list()
 }
 \description{
-Select a list, view it with listviewer in viewer pane
+Select a list, view it with listviewer in viewer pane. This is less relevant
+now with RStudio data viewer started to support list.
 }
