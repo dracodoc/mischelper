@@ -38,9 +38,14 @@ Description: profvis selected code in console
 Binding: profv
 Interactive: false
 
-Name: Misc - Unwrap text
-Description: Remove unneeded hard line breaks of text in clipboard, then paste into current cursor position.
-Binding: unwrap
+Name: Misc - Unwrap clipboard
+Description: Remove unneeded hard line breaks of text in clipboard, then update the clipboard.
+Binding: unwrap_clip
+Interactive: false
+
+Name: Misc - Unwrap selection
+Description: Remove unneeded hard line breaks of text in selection, then update the selection.
+Binding: unwrap_selection
 Interactive: false
 
 Name: Misc - Clip to data frame

@@ -96,7 +96,44 @@ clip_write_lines <- function(lines) {
   }
 }
 
-#' Unwrap text
+# get text in selection
+get_selection <- function() {
+  context <- rstudioapi::getActiveDocumentContext()
+  selection_start <- context$selection[[1]]$range$start
+  selection_end <- context$selection[[1]]$range$end
+  selection <- NULL
+  if (any(selection_start != selection_end)) { # text selected
+    selection <- context$selection[[1]]$text
+  }
+  return(selection)
+}
+
+unwrap_core <- function(source, extra_blank_line = FALSE) {
+  text_original <- if (source == "clip") {
+    # clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
+    stringr::str_trim(clip_read_lines(), side = "right")
+  } else {
+    get_selection()
+  }
+  if (is.null(text_original)) return()
+  # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
+  non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
+  # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
+  to_remove_wrap <- stringr::str_detect(text_original, stringr::str_c(".*", non_terminating_match, "$"))
+  # use space for soft wrap lines, new line for other wrap
+  line_connector <- rep(ifelse(extra_blank_line, "\n\n", "\n"), length(text_original))
+  line_connector[to_remove_wrap] <- " "
+  text_formated <- stringr::str_c(text_original, line_connector, collapse = "")
+  if (source == "clip") {
+    clip_write_lines(text_formated)
+  } else {
+    clip_write_lines(text_formated)
+    context <- rstudioapi::getActiveDocumentContext()
+    rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+  }
+}
+
+#' Unwrap clipboard
 #'
 #' \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
 #' update the clipboard.
@@ -105,20 +142,21 @@ clip_write_lines <- function(lines) {
 #'
 #' @export
 #'
-unwrap <- function(extra_blank_line = FALSE) {
-  # clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
-  clipboard <- stringr::str_trim(clip_read_lines(), side = "right")
-  # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
-  non_terminating_match <- stringr::str_c("[^\\.!?:", "\\u201d", "]") # terminating punctuation in end of line.
-  # str_view_all(clipboard, str_c(".*", non_terminating_match, "$"))
-  to_remove_wrap <- stringr::str_detect(clipboard, stringr::str_c(".*", non_terminating_match, "$"))
-  # use space for soft wrap lines, new line for other wrap
-  line_connector <- rep(ifelse(extra_blank_line, "\n\n", "\n"), length(clipboard))
-  line_connector[to_remove_wrap] <- " "
-  text_formated <- stringr::str_c(clipboard, line_connector, collapse = "")
-  clip_write_lines(text_formated)
-  # context <- rstudioapi::getActiveDocumentContext()
-  # rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+unwrap_clip <- function() {
+  unwrap_core(source = "clip")
+}
+
+#' Unwrap selection
+#'
+#' \code{unwrap} Remove unneeded hard line breaks of selected, then
+#' update the selection.
+#'
+#' @param extra_blank_line Whether to insert extra blank line between paragraphs.
+#'
+#' @export
+#'
+unwrap_selection <- function() {
+  unwrap_core(source = "selection")
 }
 
 #' Unwrap with blank line
@@ -132,7 +170,7 @@ unwrap <- function(extra_blank_line = FALSE) {
 #' @export
 #'
 unwrap_extra_blank <- function(){
-  unwrap(TRUE)
+  unwrap(source = "selection", extra_blank_line = TRUE)
 }
 
 #' Flip windows path
@@ -159,11 +197,14 @@ flip_windows_path <- function(){
 #' @export
 #'
 benchmark <- function(runs = 10){
-  context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
+  # context <- rstudioapi::getActiveDocumentContext()
+  # selection_start <- context$selection[[1]]$range$start
+  # selection_end <- context$selection[[1]]$range$end
+  selected <- get_selection()
+  if (!is.null(selected)) {
+  # }
+  # if (any(selection_start != selection_end)) { # text selected
+  #   selected <- context$selection[[1]]$text
     formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
       selected, "}, times = ", runs, ")")
     rstudioapi::sendToConsole(formated, execute = TRUE)
@@ -208,11 +249,13 @@ profv <- function(){
       stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
            call. = FALSE)
   }
-  context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
+  # context <- rstudioapi::getActiveDocumentContext()
+  # selection_start <- context$selection[[1]]$range$start
+  # selection_end <- context$selection[[1]]$range$end
+  # if (any(selection_start != selection_end)) { # text selected
+  selected <- get_selection()
+  if (!is.null(selected)) {
+    # selected <- context$selection[[1]]$text
     formated <- stringr::str_c("profvis::profvis({\n",
       selected, "})")
     rstudioapi::sendToConsole(formated, execute = TRUE)
@@ -230,11 +273,13 @@ view_list <- function(){
     stop("listviewer needed but not automatically installed.\nInstall the package with install.packages(\"listviewer\")",
          call. = FALSE)
   }
-  context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
+  # context <- rstudioapi::getActiveDocumentContext()
+  # selection_start <- context$selection[[1]]$range$start
+  # selection_end <- context$selection[[1]]$range$end
+  # if (any(selection_start != selection_end)) { # text selected
+  selected <- get_selection()
+  if (!is.null(selected)) {
+    # selected <- context$selection[[1]]$text
     formated <- stringr::str_c("listviewer::jsonedit(",
       selected, ', mode = "view", modes = c("code", "view"))')
     rstudioapi::sendToConsole(formated, execute = TRUE)
@@ -253,11 +298,13 @@ view_list <- function(){
 #' @export
 
 view_current <- function(){
-  context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
+  # context <- rstudioapi::getActiveDocumentContext()
+  # selection_start <- context$selection[[1]]$range$start
+  # selection_end <- context$selection[[1]]$range$end
+  # if (any(selection_start != selection_end)) { # text selected
+  selected <- get_selection()
+  if (!is.null(selected)) {
+    # selected <- context$selection[[1]]$text
     # this will show "View(get(selected))" in viewer, not optimal
     # View(get(selected))
     formated <- stringr::str_c("View(", selected, ')')
@@ -380,11 +427,13 @@ scan_file <- function(code_file, organize = TRUE) {
 #' @export
 #'
 scan_externals <- function() {
-  context <- rstudioapi::getActiveDocumentContext()
-  selection_start <- context$selection[[1]]$range$start
-  selection_end <- context$selection[[1]]$range$end
-  if (any(selection_start != selection_end)) { # text selected
-    selected <- context$selection[[1]]$text
+  # context <- rstudioapi::getActiveDocumentContext()
+  # selection_start <- context$selection[[1]]$range$start
+  # selection_end <- context$selection[[1]]$range$end
+  # if (any(selection_start != selection_end)) { # text selected
+  selected <- get_selection()
+  if (!is.null(selected)) {
+    # selected <- context$selection[[1]]$text
     external_funs <- scan_string(selected)
     View(external_funs)
     external_funs
