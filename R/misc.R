@@ -108,12 +108,19 @@ get_selection <- function() {
   return(selection)
 }
 
+# insert text in editor cursor
+insert_text <- function(text_formated) {
+  context <- rstudioapi::getSourceEditorContext()
+  rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+}
+
 unwrap_core <- function(source, extra_blank_line = FALSE) {
   text_original <- if (source == "clip") {
     # clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
     stringr::str_trim(clip_read_lines(), side = "right")
   } else {
-    get_selection()
+    # clipboard function always return all line as a line vector, the code was expecting this structure, so we need to split by new line.
+    stringr::str_split(get_selection(), "\n")[[1]]
   }
   if (is.null(text_original)) return()
   # use character class [] because each symbol are single characters, no need to use |. the Chinese quote have to be inside a double quote
@@ -124,12 +131,15 @@ unwrap_core <- function(source, extra_blank_line = FALSE) {
   line_connector <- rep(ifelse(extra_blank_line, "\n\n", "\n"), length(text_original))
   line_connector[to_remove_wrap] <- " "
   text_formated <- stringr::str_c(text_original, line_connector, collapse = "")
+  # # remove extra white spaces caused by end of line
+  text_formated <- stringr::str_replace_all(text_formated, "\\s+", " ")
   if (source == "clip") {
     clip_write_lines(text_formated)
   } else {
-    clip_write_lines(text_formated)
-    context <- rstudioapi::getActiveDocumentContext()
-    rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+    insert_text(text_formated)
+    # clip_write_lines(text_formated)
+    # context <- rstudioapi::getSourceEditorContext()
+    # rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
   }
 }
 
