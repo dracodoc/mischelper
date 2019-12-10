@@ -3,6 +3,11 @@ Description: Run current Shiny app as background job, open in browser with live 
 Binding: run_shiny_as_job
 Interactive: false
 
+Name: Misc - Run Commented lines
+Description: Turn commented out lines back to normal and run
+Binding: run_commented_out_lines
+Interactive: false
+
 Name: Misc - View Selected
 Description: Open selected expression as data frame in Viewer
 Binding: view_current

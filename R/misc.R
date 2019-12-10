@@ -6,6 +6,16 @@ check_pkg <- function(pkg_name) {
   }
 }
 
+#' Run Commented lines
+#'
+#' Turn commented out lines back to normal and run them.
+run_commented_out_lines <- function() {
+  selected <- get_selection()
+  striped_lines <- stringr::str_split(selected, "\n")[[1]]
+  # expecting code to be start after # , with a space
+  run_command(selected, stringr::str_sub(striped_lines, 3))
+}
+
 #' Run Shiny app as background job
 #'
 #' Run current file in source editor as shiny app in background job, open in

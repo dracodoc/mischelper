@@ -6,6 +6,12 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2019.12.10**
+
+Removed some package depdencies so that the addin can be installed with minimal requirements, and only install needed packages when the feature requires it.
+
+Sometimes I have some code commented out but want to run it from time to time. For example I often have some test code right after a function definition. This is used in interactive development so not really part of test framework. New feature will take selected commented out lines, remove comments and run in console.
+
 **2019.10.18**
 
 Running Shiny apps from RStudio will see current global environment, this has burned me more than once when my app runs fine in development, but failed after deployed because it was depending some global environment data implicitly. A shiny app should almost always run in clean session as it was supposed to be deployed. There is [a issue here](https://github.com/rstudio/rstudio/issues/5190) documented various similar requests so it is in popular need. 
