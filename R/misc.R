@@ -1,3 +1,11 @@
+# check package availability, so that user don't need to install every possible dependency at once
+check_pkg <- function(pkg_name) {
+  if (!requireNamespace(pkg_name, quietly = TRUE)) {
+    stop(sprintf('%s is needed but not installed. Please run install.packages("%s") first.', pkg_name, pkg_name),
+         call. = FALSE)
+  }
+}
+
 #' Run Shiny app as background job
 #'
 #' Run current file in source editor as shiny app in background job, open in
@@ -34,6 +42,7 @@ run_shiny_as_job <- function() {
 #' @export
 #'
 clip_2_df <- function(){
+  check_pkg("clipr")
   lines <- clipr::read_clip()
   # paste0(lines, collapse = "\n")
   # getting regular data frame so we can use the matrix indexing in next line
@@ -107,7 +116,12 @@ get_selection <- function() {
   }
   return(selection)
 }
-
+# given selected content, and new formated command and run in console. need the original content to check if it's NULL
+run_command <- function(selected, formated_cmd) {
+  if (!is.null(selected)) {
+    rstudioapi::sendToConsole(formated_cmd, execute = TRUE)
+  }
+}
 # insert text in editor cursor
 insert_text <- function(text_formated) {
   context <- rstudioapi::getSourceEditorContext()
@@ -207,18 +221,22 @@ flip_windows_path <- function(){
 #' @export
 #'
 benchmark <- function(runs = 10){
+  check_pkg("microbenchmark")
   # context <- rstudioapi::getActiveDocumentContext()
   # selection_start <- context$selection[[1]]$range$start
   # selection_end <- context$selection[[1]]$range$end
   selected <- get_selection()
-  if (!is.null(selected)) {
+  formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
+                             selected, "}, times = ", runs, ")")
+  run_command(selected, formated)
+  # if (!is.null(selected)) {
+  # # }
+  # # if (any(selection_start != selection_end)) { # text selected
+  # #   selected <- context$selection[[1]]$text
+  #   formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
+  #     selected, "}, times = ", runs, ")")
+  #   rstudioapi::sendToConsole(formated, execute = TRUE)
   # }
-  # if (any(selection_start != selection_end)) { # text selected
-  #   selected <- context$selection[[1]]$text
-    formated <- stringr::str_c("microbenchmark::microbenchmark(selected_code = {\n",
-      selected, "}, times = ", runs, ")")
-    rstudioapi::sendToConsole(formated, execute = TRUE)
-  }
 }
 
 #' time selected code
@@ -243,7 +261,8 @@ time_it <- function(){
 render_rmd <- function(){
   context <- rstudioapi::getActiveDocumentContext()
   formated <- paste0('rmarkdown::render("', context$path, '")')
-  rstudioapi::sendToConsole(formated, execute = TRUE)
+  run_command(selected, formated)
+  # rstudioapi::sendToConsole(formated, execute = TRUE)
 }
 
 #' profvis selected
@@ -255,10 +274,11 @@ render_rmd <- function(){
 #' @export
 #'
 profv <- function(){
-  if (!requireNamespace("profvis", quietly = TRUE)) {
-      stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
-           call. = FALSE)
-  }
+  # if (!requireNamespace("profvis", quietly = TRUE)) {
+  #     stop("profvis needed but not automatically installed.\nInstall the package with install.packages(\"profvis\")",
+  #          call. = FALSE)
+  # }
+  check_pkg("profvis")
   # context <- rstudioapi::getActiveDocumentContext()
   # selection_start <- context$selection[[1]]$range$start
   # selection_end <- context$selection[[1]]$range$end
@@ -279,21 +299,25 @@ profv <- function(){
 #'
 #' @export
 view_list <- function(){
-  if (!requireNamespace("listviewer", quietly = TRUE)) {
-    stop("listviewer needed but not automatically installed.\nInstall the package with install.packages(\"listviewer\")",
-         call. = FALSE)
-  }
+  check_pkg("listviewer")
+  # if (!requireNamespace("listviewer", quietly = TRUE)) {
+  #   stop("listviewer needed but not automatically installed.\nInstall the package with install.packages(\"listviewer\")",
+  #        call. = FALSE)
+  # }
   # context <- rstudioapi::getActiveDocumentContext()
   # selection_start <- context$selection[[1]]$range$start
   # selection_end <- context$selection[[1]]$range$end
   # if (any(selection_start != selection_end)) { # text selected
   selected <- get_selection()
-  if (!is.null(selected)) {
-    # selected <- context$selection[[1]]$text
-    formated <- stringr::str_c("listviewer::jsonedit(",
-      selected, ', mode = "view", modes = c("code", "view"))')
-    rstudioapi::sendToConsole(formated, execute = TRUE)
-  }
+  formated_cmd <- stringr::str_c("listviewer::jsonedit(",
+                             selected, ', mode = "view", modes = c("code", "view"))')
+  run_command(selected, formated_cmd)
+  # if (!is.null(selected)) {
+  #   # selected <- context$selection[[1]]$text
+  #   formated <- stringr::str_c("listviewer::jsonedit(",
+  #     selected, ', mode = "view", modes = c("code", "view"))')
+  #   rstudioapi::sendToConsole(formated, execute = TRUE)
+  # }
 }
 
 #' Open Data Viewer on Selected expression
@@ -313,13 +337,14 @@ view_current <- function(){
   # selection_end <- context$selection[[1]]$range$end
   # if (any(selection_start != selection_end)) { # text selected
   selected <- get_selection()
-  if (!is.null(selected)) {
-    # selected <- context$selection[[1]]$text
-    # this will show "View(get(selected))" in viewer, not optimal
-    # View(get(selected))
-    formated <- stringr::str_c("View(", selected, ')')
-    rstudioapi::sendToConsole(formated, execute = TRUE)
-  }
+  run_command(selected, stringr::str_c("View(", selected, ')'))
+  # if (!is.null(selected)) {
+  #   # selected <- context$selection[[1]]$text
+  #   # this will show "View(get(selected))" in viewer, not optimal
+  #   # View(get(selected))
+  #   formated <- stringr::str_c("View(", selected, ')')
+  #   rstudioapi::sendToConsole(formated, execute = TRUE)
+  # }
 }
 
 #' Convert Console Print Out to Script
@@ -384,6 +409,7 @@ organize_fun_table <- function(dt) {
 #'
 #' @examples mischelper::scan_fun(sort)
 scan_fun <- function(fun_obj) {
+  check_pkg("codetools")
   # function parameter lost its name so have to use generic name
   organize_fun_table(data.table(fun = "fun_obj",
              fun_inside = codetools::findGlobals(
@@ -391,6 +417,7 @@ scan_fun <- function(fun_obj) {
 }
 # code string
 scan_string <- function(code_string) {
+  check_pkg("codetools")
   temp_fun <- eval(parse(text = paste0("function() {\n", code_string, "\n}")))
   organize_fun_table(data.table(fun = "code_string",
              fun_inside = codetools::findGlobals(
@@ -409,6 +436,7 @@ scan_string <- function(code_string) {
 #' @export
 #'
 scan_file <- function(code_file, organize = TRUE) {
+  check_pkg("codetools")
   source(code_file, local = TRUE, chdir = TRUE)
   names_in_fun <- ls(sorted = FALSE)
   funs_in_each_name <- lapply(names_in_fun, function(f_name) {

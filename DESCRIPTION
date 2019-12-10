@@ -14,15 +14,15 @@ Imports:
     stringr,
     rstudioapi,
     magrittr,
-    microbenchmark,
     rmarkdown,
+    knitr,
     data.table,
     shiny,
-    miniUI,
-    clipr,
-    knitr,
-    codetools
+    miniUI
 Suggests:
+    microbenchmark,
     profvis,
-    listviewer
+    clipr,
+    listviewer,
+    codetools
 RoxygenNote: 6.1.1
