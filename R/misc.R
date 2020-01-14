@@ -8,7 +8,8 @@ check_pkg <- function(pkg_name) {
 
 #' Run Commented lines
 #'
-#' Turn commented out lines back to normal and run them.
+#' Turn commented out lines back to normal and run them. If there is selection,
+#' convert selection. If there is no selection, convert current line.
 run_commented_out_lines <- function() {
   selected <- get_selection()
   striped_lines <- stringr::str_split(selected, "\n")[[1]]
@@ -115,14 +116,17 @@ clip_write_lines <- function(lines) {
   }
 }
 
-# get text in selection
-get_selection <- function() {
+# get text in selection. if no selection, return current line.
+get_selection <- function(or_current_line = TRUE) {
   context <- rstudioapi::getActiveDocumentContext()
   selection_start <- context$selection[[1]]$range$start
   selection_end <- context$selection[[1]]$range$end
   selection <- NULL
   if (any(selection_start != selection_end)) { # text selected
     selection <- context$selection[[1]]$text
+  } else if (or_current_line) {
+    current_row_no <- context$selection[[1]]$range$start[1]
+    selection <- context[["contents"]][current_row_no]
   }
   return(selection)
 }

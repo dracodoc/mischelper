@@ -6,6 +6,10 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+**2020.01.13**
+
+Addin will work on either selected text or current line.
+
 **2019.12.10**
 
 Removed some package depdencies so that the addin can be installed with minimal requirements, and only install needed packages when the feature requires it.
