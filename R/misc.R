@@ -161,20 +161,21 @@ unwrap_core <- function(source, extra_blank_line = FALSE) {
   text_formated <- stringr::str_c(text_original, line_connector, collapse = "")
   # # remove extra white spaces caused by end of line
   text_formated <- stringr::str_replace_all(text_formated, "\\s+", " ")
-  if (source == "clip") {
-    clip_write_lines(text_formated)
-  } else {
-    insert_text(text_formated)
-    # clip_write_lines(text_formated)
-    # context <- rstudioapi::getSourceEditorContext()
-    # rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
-  }
+  insert_text(text_formated)
+  # if (source == "clip") {
+  #   clip_write_lines(text_formated)
+  # } else {
+  #   insert_text(text_formated)
+  #   # clip_write_lines(text_formated)
+  #   # context <- rstudioapi::getSourceEditorContext()
+  #   # rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
+  # }
 }
 
 #' Unwrap clipboard
 #'
 #' \code{unwrap} Remove unneeded hard line breaks of text in clipboard, then
-#' update the clipboard.
+#' insert text.
 #'
 #' @param extra_blank_line Whether to insert extra blank line between paragraphs.
 #'
