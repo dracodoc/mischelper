@@ -2,8 +2,8 @@ Package: mischelper
 Type: Package
 Title: Collections Of Miscellaneous Helper Functions To Save Some Time
 Version: 0.3.0
-Author: Xianghui Dong
-Maintainer: Xianghui Dong <dracodoc@gmail.com>
+Author: dracodoc
+Maintainer: dracodoc <dracodoc@gmail.com>
 Description: Remove unneeded hard line breaks of text in clipboard, then paste.
     flip windows path separator in clipboard.
     microbenchmark selected code.
