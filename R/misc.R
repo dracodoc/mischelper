@@ -12,8 +12,8 @@ check_pkg <- function(pkg_name) {
 #' convert selection. If there is no selection, convert current line.
 run_commented_out_lines <- function() {
   selected <- get_selection()
-  striped_lines <- stringr::str_split(selected, "\n")[[1]]
-  # expecting code to be start after # , with a space
+  # expecting code to be start after # , with a space. it's possible there is leading spaces, such like comment line inside a function with indentation. Need () with :: syntax in pipe
+  striped_lines <- stringr::str_split(selected, "\n")[[1]] %>% (stringr::str_trim)
   run_command(selected, stringr::str_sub(striped_lines, 3))
 }
 
