@@ -6,6 +6,11 @@ Used to be named [formatpaste](https://github.com/dracodoc/formatpaste).
 These functions are very simple in concept but may save you some time.
 
 ## Updates
+
+**2021.03.15**
+
+Previously `format console` used R builtin clipboard support which only support windows/Mac. Per user request of linux support, this feature switched to `clipr` which has linux support. `clipr` is a required dependency package now.
+
 **2020.01.13**
 
 Addin will work on either selected text or current line.

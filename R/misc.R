@@ -53,7 +53,6 @@ run_shiny_as_job <- function() {
 #' @export
 #'
 clip_2_df <- function(){
-  check_pkg("clipr")
   lines <- clipr::read_clip()
   # paste0(lines, collapse = "\n")
   # getting regular data frame so we can use the matrix indexing in next line
@@ -65,29 +64,24 @@ clip_2_df <- function(){
   return(df)
 }
 
+
+# no longer use this as linux was not supported. use clipr instead.
 #' Read windows/mac clipboard into lines
-#'
-#' If windows, call \code{utils::readClipboard()}. If mac os, use
-#' \code{pipe("pbpaste")}.
-#'
-#' @return character vector
-#' @export
-#' @examples
-#' clip_read_lines()
-clip_read_lines <- function(){
-  os <- Sys.info()[['sysname']]
-  if (os == "Windows") {
-    return(utils::readClipboard())
-  } else if (os == "Darwin") {
-    pb_read_lines <- function(){
-      clip_r_mac <- pipe("pbpaste")
-      lines <- readLines(clip_r_mac)
-      close(clip_r_mac)
-      return(lines)
-    }
-    return(pb_read_lines())
-  }
-}
+# clip_read_lines <- function(){
+#   os <- Sys.info()[['sysname']]
+#   if (os == "Windows") {
+#     return(utils::readClipboard())
+#   } else if (os == "Darwin") {
+#     pb_read_lines <- function(){
+#       clip_r_mac <- pipe("pbpaste")
+#       lines <- readLines(clip_r_mac)
+#       close(clip_r_mac)
+#       return(lines)
+#     }
+#     return(pb_read_lines())
+#   }
+# }
+
 
 #' Write lines into windows/mac clipboard
 #'
@@ -96,29 +90,31 @@ clip_read_lines <- function(){
 #'
 #' Note there could be an extra new line in the end for mac os version.
 #'
-#' @param lines character vector
-#'
-#' @export
-#' @examples
-#' clip_write_lines(c("line 1", "line 2 \n and line 3"))
-clip_write_lines <- function(lines) {
-  os <- Sys.info()[['sysname']]
-  if (os == "Windows") {
-    return(utils::writeClipboard(lines))
-  } else if (os == "Darwin") {
-    pb_write_lines <- function(lines){
-      clip_w_mac <- pipe("pbcopy", "w")
-      # if using write, will have extra new line in end
-      cat(lines, file = clip_w_mac, sep = "\n")
-      close(clip_w_mac)  # close to flush
-    }
-    return(pb_write_lines(lines))
-  }
-}
+# clip_write_lines <- function(lines) {
+#   os <- Sys.info()[['sysname']]
+#   if (os == "Windows") {
+#     return(utils::writeClipboard(lines))
+#   } else if (os == "Darwin") {
+#     pb_write_lines <- function(lines){
+#       clip_w_mac <- pipe("pbcopy", "w")
+#       # if using write, will have extra new line in end
+#       cat(lines, file = clip_w_mac, sep = "\n")
+#       close(clip_w_mac)  # close to flush
+#     }
+#     return(pb_write_lines(lines))
+#   }
+# }
 
-# get text in selection. if no selection, return current line.
-get_selection <- function(or_current_line = TRUE) {
-  context <- rstudioapi::getActiveDocumentContext()
+
+
+
+# get text in selection, which could be source editor or console editor. if no selection, return current line.
+get_selection <- function(editor = "active", or_current_line = TRUE) {
+  # context <- rstudioapi::getActiveDocumentContext()
+  context <- switch(editor,
+                    active = rstudioapi::getActiveDocumentContext(),
+                    source = rstudioapi::getSourceEditorContext(),
+                    console = rstudioapi::getConsoleEditorContext())
   selection_start <- context$selection[[1]]$range$start
   selection_end <- context$selection[[1]]$range$end
   selection <- NULL
@@ -145,7 +141,7 @@ insert_text <- function(text_formated) {
 unwrap_core <- function(source, extra_blank_line = FALSE) {
   text_original <- if (source == "clip") {
     # clipboard <- stringr::str_trim(utils::readClipboard(), side = "right")
-    stringr::str_trim(clip_read_lines(), side = "right")
+    stringr::str_trim(clipr::read_clip(), side = "right")
   } else {
     # clipboard function always return all line as a line vector, the code was expecting this structure, so we need to split by new line.
     stringr::str_split(get_selection(), "\n")[[1]]
@@ -162,14 +158,6 @@ unwrap_core <- function(source, extra_blank_line = FALSE) {
   # # remove extra white spaces caused by end of line
   text_formated <- stringr::str_replace_all(text_formated, "\\s+", " ")
   insert_text(text_formated)
-  # if (source == "clip") {
-  #   clip_write_lines(text_formated)
-  # } else {
-  #   insert_text(text_formated)
-  #   # clip_write_lines(text_formated)
-  #   # context <- rstudioapi::getSourceEditorContext()
-  #   # rstudioapi::insertText(context$selection[[1]]$range, text_formated, id = context$id)
-  # }
 }
 
 #' Unwrap clipboard
@@ -220,7 +208,7 @@ unwrap_extra_blank <- function(){
 #' @export
 #'
 flip_windows_path <- function(){
-  p2 <- stringr::str_replace_all(clip_read_lines(), "\\\\", "/")
+  p2 <- stringr::str_replace_all(clipr::read_clip(), "\\\\", "/")
   context <- rstudioapi::getActiveDocumentContext()
   rstudioapi::insertText(context$selection[[1]]$range, p2, id = context$id)
 }
@@ -373,7 +361,10 @@ view_current <- function(){
 #' @export
 #'
 format_console <- function(){
-  input_lines <- clip_read_lines()
+  # clipboard only work in windows/mac. switch to clipr to work on linux too.
+  input_lines <- clipr::read_clip()
+  # this doesn't work. console editor only get the current editing area, i.e. commands not executed. Selected lines of console output is not part of console editor. have to use clipboard.
+  # input_lines <- stringr::str_split(get_selection(editor = "console"), "\n")[[1]]
   empty_index <- stringr::str_detect(input_lines, "^\\s*$")
   commands_index <- stringr::str_detect(input_lines, "^\\+|^>")
   input_lines[!(commands_index | empty_index)] <-
@@ -382,9 +373,9 @@ format_console <- function(){
     stringr::str_replace_all(input_lines[commands_index], "^\\+", " ")
   input_lines[commands_index] <-
     stringr::str_replace_all(input_lines[commands_index], "^>\\s?", "")
-  clip_write_lines(input_lines)
+  clipr::write_clip(input_lines)
   output <- stringr::str_c(input_lines, "\n", collapse = "")
-  context <- rstudioapi::getActiveDocumentContext()
+  context <- rstudioapi::getSourceEditorContext()
   rstudioapi::insertText(context$selection[[1]]$range, output, id = context$id)
 }
 #' Generate the literal c() of a character vector

@@ -18,11 +18,11 @@ Imports:
     knitr,
     data.table,
     shiny,
-    miniUI
+    miniUI,
+    clipr
 Suggests:
     microbenchmark,
     profvis,
-    clipr,
     listviewer,
     codetools
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

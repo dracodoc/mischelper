@@ -13,7 +13,7 @@ Description: Open selected expression as data frame in Viewer
 Binding: view_current
 Interactive: false
 
-Name: Misc - Convert Console to Script
+Name: Misc - Format Console to Script
 Description: Format console input and output to script
 Binding: format_console
 Interactive: false
