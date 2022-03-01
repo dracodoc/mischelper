@@ -8,6 +8,7 @@ These functions are very simple in concept but may save you some time.
 ## Updates
 
 **2022.02.28**
+
 Added a function to navigate File Pane to the folder of current file in editor, you can register the feature with keyboard shortcut if needed. If need to change directory in terminal, you can use File Pane menu `Open new terminal here`. If need to return to default project root, you can use File Pane menu `Go to working diretory`.
 
 **2021.03.15**
