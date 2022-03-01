@@ -18,6 +18,11 @@ Description: Format console input and output to script
 Binding: format_console
 Interactive: false
 
+Name: Misc - Navigate File Pane to Current Editor
+Description: Navigate File Pane to folder of current file in editor
+Binding: file_cd_current
+Interactive: false
+
 Name: Misc - Render RMarkdown
 Description: Render RMarkdown in global environment
 Binding: render_rmd

@@ -397,6 +397,17 @@ format_console <- function(){
 printc <- function(x){
   cat(paste0('c("', paste(x, collapse = '", "'), '")'))
 }
+get_current_editor_path <- function() {
+  context <- rstudioapi::getSourceEditorContext()
+  dirname(context$path)
+}
+#' Navigate File Pane to folder of current file in editor
+#'
+#' @export
+#'
+file_cd_current <- function() {
+  rstudioapi::filesPaneNavigate(get_current_editor_path())
+}
 # scan external functions ----
 # should organize by funs_inside, so we can replace all usage in one run
 organize_fun_table <- function(dt) {
