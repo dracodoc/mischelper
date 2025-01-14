@@ -9,7 +9,7 @@ These functions are very simple in concept but may save you some time.
 
 **2025.01.14**
 
-Added some functions to help quality check in data processing, and functions to support Literate programming with RMarkdown. My workflow is like this:
+Added some functions to help quality check in data processing(`show_duplicates`, `printc`, `log_print`, `check_print`, see function help for usage), and functions to support Literate programming with RMarkdown. My workflow is like this:
 - Create a RMarkdown document, gather all the requirement, documents, links, notes in the document.
 - Start to explore various parts in RMD code chunks. There could be multiple version of same function, some exploration may include references, links, notes, records of why some approaches didn't work, what need to be noted for the current approach.
 - RMD allow text and code to be interlaced cleanly, you don't need to write large chunk of text in code comments, and you can keep the historical explorations for record. After some time the older code can be moved to a `Archive` section in the end of document so it will not interfere with the current development but still kept for record.
