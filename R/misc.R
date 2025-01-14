@@ -64,49 +64,16 @@ clip_2_df <- function(){
   return(df)
 }
 
-
-# no longer use this as linux was not supported. use clipr instead.
-#' Read windows/mac clipboard into lines
-# clip_read_lines <- function(){
-#   os <- Sys.info()[['sysname']]
-#   if (os == "Windows") {
-#     return(utils::readClipboard())
-#   } else if (os == "Darwin") {
-#     pb_read_lines <- function(){
-#       clip_r_mac <- pipe("pbpaste")
-#       lines <- readLines(clip_r_mac)
-#       close(clip_r_mac)
-#       return(lines)
-#     }
-#     return(pb_read_lines())
-#   }
-# }
-
-
-#' Write lines into windows/mac clipboard
+#' Get current time in ISO format
 #'
-#' If windows, call \code{utils::writeClipboard()}. If mac os, use
-#' \code{pipe("pbcopy", "w")}.
+#' The time string in this format can be used in file name, directory name etc
 #'
-#' Note there could be an extra new line in the end for mac os version.
+#' @return current date time in ISO format %Y-%m-%d_%H-%M-%S
+#' @export
 #'
-# clip_write_lines <- function(lines) {
-#   os <- Sys.info()[['sysname']]
-#   if (os == "Windows") {
-#     return(utils::writeClipboard(lines))
-#   } else if (os == "Darwin") {
-#     pb_write_lines <- function(lines){
-#       clip_w_mac <- pipe("pbcopy", "w")
-#       # if using write, will have extra new line in end
-#       cat(lines, file = clip_w_mac, sep = "\n")
-#       close(clip_w_mac)  # close to flush
-#     }
-#     return(pb_write_lines(lines))
-#   }
-# }
-
-
-
+current_timestamp <- function() {
+  format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
+}
 
 # get text in selection, which could be source editor or console editor. if no selection, return current line.
 get_selection <- function(editor = "active", or_current_line = TRUE) {

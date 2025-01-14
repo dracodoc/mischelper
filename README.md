@@ -7,6 +7,19 @@ These functions are very simple in concept but may save you some time.
 
 ## Updates
 
+**2025.01.14**
+
+Added some functions to help quality check in data processing, and functions to support Literate programming with RMarkdown. My workflow is like this:
+- Create a RMarkdown document, gather all the requirement, documents, links, notes in the document.
+- Start to explore various parts in RMD code chunks. There could be multiple version of same function, some exploration may include references, links, notes, records of why some approaches didn't work, what need to be noted for the current approach.
+- RMD allow text and code to be interlaced cleanly, you don't need to write large chunk of text in code comments, and you can keep the historical explorations for record. After some time the older code can be moved to a `Archive` section in the end of document so it will not interfere with the current development but still kept for record.
+- The RMD titles, code chunk labels and header comments in R code can generate an [outline](https://posit.co/blog/rstudio-v1-4-preview-little-things/), which is very helpful for long document or R source code. 
+- After all the exploration, you can write one line of code like this, which will take some code chunks and save as R source code, put in a folder of Shiny app(or any other places you need to deploy the code). 
+
+    export_chunks("Back_End.Rmd", c("signal processing", "read input"), "app/1_util_export.R")
+    
+  Later if you need to update the code, just develop in the RMD (and with all the documentation and references for future you to revisit), then run this line of code again to deploy the code.    
+
 **2022.02.28**
 
 Added a function to navigate File Pane to the folder of current file in editor, you can register the feature with keyboard shortcut if needed. If need to change directory in terminal, you can use File Pane menu `Open new terminal here`. If need to return to default project root, you can use File Pane menu `Go to working diretory`.

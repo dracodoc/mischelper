@@ -17,12 +17,15 @@ Imports:
     rmarkdown,
     knitr,
     data.table,
+    lubridate,
+    purrr,
     shiny,
     miniUI,
     clipr
 Suggests:
+    crayon,
     microbenchmark,
     profvis,
     listviewer,
     codetools
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
